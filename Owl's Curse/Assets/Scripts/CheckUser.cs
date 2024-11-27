@@ -9,8 +9,10 @@ using TMPro;
 
 public class CheckUser : MonoBehaviour
 {
-    public TMP_InputField inputField; 
-    private string dbPath;           
+    public TMP_InputField userNameInputField; 
+    public TMP_InputField passwordInputField; 
+    public TMP_Text feedbackText;             
+    private string dbPath;                   
 
     void Start()
     {
@@ -19,11 +21,14 @@ public class CheckUser : MonoBehaviour
 
     public void Check()
     {
-        string userName = inputField.text.Trim(); 
+        string userName = userNameInputField.text.Trim();
+        string password = passwordInputField.text.Trim();
 
-        if (string.IsNullOrWhiteSpace(userName))
+        
+        if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
         {
-            Debug.LogWarning("Имя пользователя не может быть пустым или состоять только из пробелов!");
+            feedbackText.text = "Имя пользователя и пароль не могут быть пустыми!";
+            Debug.LogWarning("Имя пользователя и пароль не могут быть пустыми!");
             return;
         }
 
@@ -39,37 +44,51 @@ public class CheckUser : MonoBehaviour
                 {
                     Debug.Log("Подключение к базе данных успешно!");
 
-                    string query = "SELECT COUNT(*) FROM users WHERE name = @name;";
+                    string query = "SELECT password FROM users WHERE name = @name;";
 
                     using (IDbCommand command = dbConnection.CreateCommand())
                     {
                         command.CommandText = query;
 
-                        IDbDataParameter param = command.CreateParameter();
-                        param.ParameterName = "@name";
-                        param.Value = userName; 
-                        command.Parameters.Add(param);
+                        IDbDataParameter nameParam = command.CreateParameter();
+                        nameParam.ParameterName = "@name";
+                        nameParam.Value = userName;
+                        command.Parameters.Add(nameParam);
 
-                        int userCount = Convert.ToInt32(command.ExecuteScalar());
-                        
-                        if (userCount > 0)
+                        object result = command.ExecuteScalar();
+
+                        if (result != null)
                         {
-                            Debug.Log("Пользователь найден в базе данных.");
+                            string storedPassword = result.ToString();
+
+                            if (storedPassword == password) 
+                            {
+                                feedbackText.text = "Успешный вход!";
+                                Debug.Log("Успешный вход!");
+                            }
+                            else 
+                            {
+                                feedbackText.text = "Неправильный пароль!";
+                                Debug.LogWarning("Неправильный пароль!");
+                            }
                         }
                         else
                         {
-                            Debug.Log("Пользователь не найден в базе данных.");
+                            feedbackText.text = "Пользователь не найден!";
+                            Debug.LogWarning("Пользователь не найден!");
                         }
                     }
                 }
                 else
                 {
+                    feedbackText.text = "Не удалось подключиться к базе данных.";
                     Debug.LogWarning("Не удалось подключиться к базе данных.");
                 }
             }
         }
         catch (System.Exception ex)
         {
+            feedbackText.text = "Ошибка при проверке пользователя.";
             Debug.LogError($"Ошибка при проверке пользователя: {ex.Message}");
         }
     }
