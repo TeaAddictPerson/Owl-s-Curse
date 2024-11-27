@@ -1,43 +1,14 @@
-﻿using TMPro;
+﻿﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class ButtonStateController : MonoBehaviour
+public class SceneTransition : MonoBehaviour
 {
-    public TMP_InputField inputField; 
-    public Button button;             
-    public TextMeshProUGUI buttonText; 
+    public int scene_number;
 
-    private Color normalTextColor;    
-    private Color disabledTextColor;  
-
-    void Start()
+    public void Transition()
     {
-        
-        normalTextColor = buttonText.color;
-        disabledTextColor = new Color(normalTextColor.r, normalTextColor.g, normalTextColor.b, 0.5f);
-
-        SetButtonState(false);
-
-        
-        inputField.onValueChanged.AddListener(OnInputValueChanged);
-    }
-
-    void OnInputValueChanged(string text)
-    {
-      
-        SetButtonState(!string.IsNullOrEmpty(text));
-    }
-
-    void SetButtonState(bool isActive)
-    {
-        button.interactable = isActive; 
-        buttonText.color = isActive ? normalTextColor : disabledTextColor; 
-    }
-
-    void OnDestroy()
-    {
-       
-        inputField.onValueChanged.RemoveListener(OnInputValueChanged);
+        SceneManager.LoadScene(scene_number);
     }
 }
