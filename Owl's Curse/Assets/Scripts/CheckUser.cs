@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Mono.Data.Sqlite;
 using System.Data;
 using System.IO;
+using Mono.Data.Sqlite;
 using TMPro;
+using UnityEngine;
 
 public class CheckUser : MonoBehaviour
 {
-    public TMP_InputField userNameInputField; 
-    public TMP_InputField passwordInputField; 
-    public TMP_Text feedbackText;             
-    private string dbPath;                   
+    public TMP_InputField userNameInputField;
+    public TMP_InputField passwordInputField;
+    public TMP_Text feedbackText;
+    private string dbPath;
 
     void Start()
     {
@@ -24,7 +22,6 @@ public class CheckUser : MonoBehaviour
         string userName = userNameInputField.text.Trim();
         string password = passwordInputField.text.Trim();
 
-        
         if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
         {
             feedbackText.text = "Имя пользователя и пароль не могут быть пустыми!";
@@ -61,12 +58,16 @@ public class CheckUser : MonoBehaviour
                         {
                             string storedPassword = result.ToString();
 
-                            if (storedPassword == password) 
+                            if (storedPassword == password)
                             {
                                 feedbackText.text = "Успешный вход!";
                                 Debug.Log("Успешный вход!");
+
+                              
+                                UserSession.UserName = userName;
+                                Debug.Log($"Имя пользователя сохранено: {UserSession.UserName}");
                             }
-                            else 
+                            else
                             {
                                 feedbackText.text = "Неправильный пароль!";
                                 Debug.LogWarning("Неправильный пароль!");
@@ -86,7 +87,7 @@ public class CheckUser : MonoBehaviour
                 }
             }
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             feedbackText.text = "Ошибка при проверке пользователя.";
             Debug.LogError($"Ошибка при проверке пользователя: {ex.Message}");

@@ -1,19 +1,18 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Mono.Data.Sqlite;
 using System.Data;
 using System.IO;
-using TMPro;
 using System.Linq;
-using System;
+using Mono.Data.Sqlite;
+using TMPro;
+using UnityEngine;
 
 public class AddUserCheck : MonoBehaviour
 {
-    public TMP_InputField userNameInputField; 
+    public TMP_InputField userNameInputField;
     public TMP_InputField passwordInputField;
-    public TMP_Text feedbackText;             
-    private string dbPath;                   
+    public TMP_Text feedbackText;
+    private string dbPath;
 
     void Start()
     {
@@ -25,7 +24,6 @@ public class AddUserCheck : MonoBehaviour
         string userName = userNameInputField.text.Trim();
         string password = passwordInputField.text.Trim();
 
-      
         if (string.IsNullOrEmpty(userName))
         {
             feedbackText.text = "Имя пользователя не может быть пустым!";
@@ -33,7 +31,6 @@ public class AddUserCheck : MonoBehaviour
             return;
         }
 
-       
         string passwordFeedback = CheckPasswordErrors(password);
         if (!string.IsNullOrEmpty(passwordFeedback))
         {
@@ -43,6 +40,7 @@ public class AddUserCheck : MonoBehaviour
         }
 
         string connectionString = $"URI=file:{dbPath}";
+
         try
         {
             using (IDbConnection dbConnection = new SqliteConnection(connectionString))
@@ -51,7 +49,6 @@ public class AddUserCheck : MonoBehaviour
 
                 if (dbConnection.State == ConnectionState.Open)
                 {
-                 
                     string checkQuery = "SELECT COUNT(*) FROM users WHERE name = @name;";
 
                     using (IDbCommand checkCommand = dbConnection.CreateCommand())
@@ -69,11 +66,10 @@ public class AddUserCheck : MonoBehaviour
                         {
                             feedbackText.text = "Пользователь с таким именем уже существует!";
                             Debug.LogWarning("Пользователь с таким именем уже существует!");
-                            return; 
+                            return;
                         }
                     }
 
-                  
                     string query = "INSERT INTO users (name, password) VALUES (@name, @password);";
 
                     using (IDbCommand command = dbConnection.CreateCommand())
@@ -96,6 +92,10 @@ public class AddUserCheck : MonoBehaviour
                         {
                             feedbackText.text = $"Пользователь '{userName}' успешно добавлен!";
                             Debug.Log($"Пользователь '{userName}' успешно добавлен в базу данных.");
+
+                           
+                            UserSession.UserName = userName;
+                            Debug.Log($"Имя пользователя сохранено: {UserSession.UserName}");
                         }
                         else
                         {
@@ -111,7 +111,7 @@ public class AddUserCheck : MonoBehaviour
                 }
             }
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             feedbackText.text = "Ошибка при добавлении пользователя.";
             Debug.LogError($"Ошибка при добавлении пользователя: {ex.Message}");
@@ -120,22 +120,26 @@ public class AddUserCheck : MonoBehaviour
 
     private string CheckPasswordErrors(string password)
     {
-        if (password.Length <8)
+        if (password.Length < 8)
             return "Пароль должен содержать не менее 8 символов";
 
         if (password.Length > 12)
             return "Пароль должен содержать не более 12 символов";
 
+        bool hasLetter = false;
         bool hasDigit = false;
         bool hasSpecialChar = false;
         List<string> missingComponents = new List<string>();
 
         foreach (char c in password)
         {
+            if (char.IsLower(c)) hasLetter = true;
             if (char.IsDigit(c)) hasDigit = true;
             if ("_+-/()".Contains(c)) hasSpecialChar = true;
         }
 
+        if (!hasLetter)
+            missingComponents.Add("букву");
         if (!hasDigit)
             missingComponents.Add("цифру");
         if (!hasSpecialChar)
