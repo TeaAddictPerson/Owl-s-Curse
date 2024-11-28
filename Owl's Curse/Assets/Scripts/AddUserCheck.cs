@@ -120,11 +120,11 @@ public class AddUserCheck : MonoBehaviour
 
     private string CheckPasswordErrors(string password)
     {
-        if (password.Length < 5)
-            return "Пароль должен содержать не менее 5 символов";
+        if (password.Length <8)
+            return "Пароль должен содержать не менее 8 символов";
 
-        if (password.Length > 8)
-            return "Пароль должен содержать не более 8 символов";
+        if (password.Length > 12)
+            return "Пароль должен содержать не более 12 символов";
 
         bool hasDigit = false;
         bool hasSpecialChar = false;
