@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\SqlConnect.cs" />
     <Compile Include="Assets\Scripts\UserSession.cs" />
+    <Compile Include="Assets\Scripts\UserStatsChecker.cs" />
     <Compile Include="Assets\Scripts\UsernameInputValidator.cs" />
     <Compile Include="Assets\Scripts\ValidatePassword.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
