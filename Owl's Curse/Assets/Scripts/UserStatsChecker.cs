@@ -6,7 +6,7 @@ using System.IO;
 
 public class UserStatsChecker : MonoBehaviour
 {
-    public TMP_Text killsText;
+    public TMP_Text killsText; 
     public TMP_Text lorenotesText; 
 
     private string dbPath;
@@ -23,7 +23,7 @@ public class UserStatsChecker : MonoBehaviour
     {
         string userName = UserSession.UserName;
 
-      
+     
         if (string.IsNullOrEmpty(userName))
         {
             Debug.LogWarning("Имя пользователя не задано. Выводим нули.");
@@ -47,7 +47,7 @@ public class UserStatsChecker : MonoBehaviour
                     string query = @"
                         SELECT kills, lorenotes 
                         FROM stats 
-                        WHERE user_id = (SELECT id FROM users WHERE name = @name);";
+                        WHERE userId = (SELECT id FROM users WHERE name = @name);";
 
                     using (IDbCommand command = dbConnection.CreateCommand())
                     {
@@ -63,8 +63,8 @@ public class UserStatsChecker : MonoBehaviour
                             if (reader.Read())
                             {
                                
-                                int kills = reader.GetInt32(0);
-                                int lorenotes = reader.GetInt32(1);
+                                int kills = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                                int lorenotes = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
 
                                 killsText.text = kills.ToString();
                                 lorenotesText.text = lorenotes.ToString();
@@ -92,8 +92,6 @@ public class UserStatsChecker : MonoBehaviour
             DisplayZeros();
         }
     }
-
- 
     void DisplayZeros()
     {
         killsText.text = "0";

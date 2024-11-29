@@ -4,6 +4,7 @@ using System.IO;
 using Mono.Data.Sqlite;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckUser : MonoBehaviour
 {
@@ -62,8 +63,8 @@ public class CheckUser : MonoBehaviour
                             {
                                 feedbackText.text = "Успешный вход!";
                                 Debug.Log("Успешный вход!");
+                                SceneManager.LoadScene(3);
 
-                              
                                 UserSession.UserName = userName;
                                 Debug.Log($"Имя пользователя сохранено: {UserSession.UserName}");
                             }

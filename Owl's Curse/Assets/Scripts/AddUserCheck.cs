@@ -6,6 +6,7 @@ using System.Linq;
 using Mono.Data.Sqlite;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AddUserCheck : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class AddUserCheck : MonoBehaviour
             Debug.LogWarning(passwordFeedback);
             return;
         }
+
+        SceneManager.LoadScene(3);
 
         string connectionString = $"URI=file:{dbPath}";
 

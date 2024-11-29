@@ -523,6 +523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f39320a590971841a487440eaa3ff74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputField1: {fileID: 1175922085}
+  inputField2: {fileID: 70368718}
+  button: {fileID: 1824157280}
+  buttonText: {fileID: 976279333}
 --- !u!1 &590595587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,50 +1571,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437029987}
   m_CullTransparentMesh: 0
---- !u!1 &1519078358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1519078360}
-  - component: {fileID: 1519078359}
-  m_Layer: 0
-  m_Name: GameStartTransit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1519078359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519078358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1a77fe4810a40f4a8f7ceeed85acc89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scene_number: 3
---- !u!4 &1519078360
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519078358}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.22238623, y: 0.20482615, z: 322.56335}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1657613856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,7 +2111,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1519078359}
+      - m_Target: {fileID: 0}
         m_MethodName: Transition
         m_Mode: 1
         m_Arguments:
