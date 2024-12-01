@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody2D rd;
     private float HorizontalMove = 0f;
     private bool FacingRight = false;
+  
 
     [Header("Настройки передвижения гг")]
     [Range(0, 5f)] public float speed = 1f;
@@ -20,23 +21,30 @@ public class PlayerScript : MonoBehaviour
     public bool IsGrounded = false;
     [Range(-5, 5f)] public float groundOffsetY = -1.8f;
     [Range(0, 10f)] public float groundRadius = 0.3f;
+
+    private bool wasGrounded;
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
+        bool wasGrounded = IsGrounded;
     }
 
 
-    void Update()
+  
+
+    private void Update()
     {
+        
         if (IsGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
         }
 
+       
         HorizontalMove = Input.GetAxisRaw("Horizontal") * speed;
-
         animator.SetFloat("HorizontalMove", Mathf.Abs(HorizontalMove));
 
+       
         if (HorizontalMove < 0 && FacingRight)
         {
             Flip();
@@ -46,15 +54,14 @@ public class PlayerScript : MonoBehaviour
             Flip();
         }
 
-        if (IsGrounded == false)
+        
+        if (IsGrounded != wasGrounded) 
         {
-            animator.SetBool("Jumping", true);
-        }
-        else
-        {
-            animator.SetBool("Jumping", false);
+            animator.SetBool("Jumping", !IsGrounded);
+            wasGrounded = IsGrounded;
         }
     }
+
 
     private void FixedUpdate()
     {
