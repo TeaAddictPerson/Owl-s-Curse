@@ -9,6 +9,15 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody2D rd;
     private float HorizontalMove = 0f;
     private bool FacingRight = false;
+
+    public Transform attackPoint;
+    public float AttackRange=0.5f;
+
+    public int attackDamage=10;
+    public LayerMask enemyLayers;
+
+    public float attackRate=2f;
+    float nextAttackTime=0f;
   
 
     [Header("Настройки передвижения гг")]
@@ -29,11 +38,17 @@ public class PlayerScript : MonoBehaviour
         bool wasGrounded = IsGrounded;
     }
 
-
-  
-
     private void Update()
     {
+        if(Time.time >= nextAttackTime)
+        {
+                if(Input.GetMouseButtonDown(0))
+                {
+                     Attack();
+                     nextAttackTime=Time.time+1f/attackRate;
+                }
+        }
+    
         
         if (IsGrounded && Input.GetKeyDown(KeyCode.Space))
         {
@@ -61,6 +76,25 @@ public class PlayerScript : MonoBehaviour
             wasGrounded = IsGrounded;
         }
     }
+
+      void Attack()
+        {
+            animator.SetTrigger("Attack");
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, AttackRange, enemyLayers);
+
+            foreach(Collider2D enemy in hitEnemies)
+            {
+               enemy.GetComponent<Frog>().TakeDamage(attackDamage);
+            }
+        }
+
+        void OnDrawGizmosSelected()
+        {
+            if(attackPoint == null)
+            return;
+            
+           Gizmos.DrawWireSphere(attackPoint.position,AttackRange); 
+        }
 
 
     private void FixedUpdate()
