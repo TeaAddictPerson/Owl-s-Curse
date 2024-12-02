@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\ButtonStateController.cs" />
     <Compile Include="Assets\Scripts\CheckUser.cs" />
     <Compile Include="Assets\Scripts\Frog.cs" />
+    <Compile Include="Assets\Scripts\IDamageable.cs" />
     <Compile Include="Assets\Scripts\NewGame.cs" />
     <Compile Include="Assets\Scripts\NewGameButtonController.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />

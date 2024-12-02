@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 874632724}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,7 +290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874632718}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0800002, y: -0.53, z: 0}
+  m_LocalPosition: {x: 1.39, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 238216765}
@@ -416,6 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2046967a0d6154980201dfe324e852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 15
+  invincibilityDuration: 1
   attackPoint: {fileID: 238216765}
   AttackRange: 0.9
   attackDamage: 10
@@ -429,6 +431,7 @@ MonoBehaviour:
   IsGrounded: 0
   groundOffsetY: -1.1
   groundRadius: 0.3
+  isDead: 0
 --- !u!1 &1146465796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1746,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1725242908}
   maxHealth: 10
+  moveSpeed: 3
+  jumpForce: 3
+  detectionRange: 5
+  maxChaseDistance: 8
+  attackRange: 1.5
+  attackCooldown: 2
 --- !u!1 &1859404176
 GameObject:
   m_ObjectHideFlags: 0
