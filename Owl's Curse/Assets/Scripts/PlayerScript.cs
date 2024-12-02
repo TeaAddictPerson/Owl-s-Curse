@@ -37,7 +37,7 @@ public class PlayerScript : MonoBehaviour
         rd = GetComponent<Rigidbody2D>();
         bool wasGrounded = IsGrounded;
     }
-
+    
     private void Update()
     {
         if(Time.time >= nextAttackTime)
