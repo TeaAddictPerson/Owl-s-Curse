@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -7,8 +8,10 @@ public class PlayerScript : MonoBehaviour
     private float HorizontalMove = 0f;
     private bool FacingRight = false;
 
+    public Image Bar;
+
     [Header("Здоровье")]
-    public int maxHealth = 5;
+    public int maxHealth = 15;
     private int currentHealth;
     public float invincibilityDuration = 1f; 
     private float invincibilityTimer = 0f;
@@ -102,6 +105,7 @@ public class PlayerScript : MonoBehaviour
     {
         Debug.Log($"Получен урон: {damage}. текущее хп: {currentHealth}");
 
+
         if (isInvincible || isDead)
         {
             Debug.Log("Дамаг не прошел игрок умер или в инвизе");
@@ -109,6 +113,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         currentHealth -= damage;
+        Bar.fillAmount=(float)currentHealth/maxHealth;
         animator.SetTrigger("Hurt");
 
      
