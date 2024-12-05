@@ -35,14 +35,16 @@ public class PlayerScript : MonoBehaviour
     public bool IsGrounded = false;
     [Range(-5, 5f)] public float groundOffsetY = -1.8f;
     [Range(0, 10f)] public float groundRadius = 0.3f;
+    public Transform legs;
+    public LayerMask Ground;
 
-    private bool wasGrounded;
+
+
     public bool isDead = false;
 
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
-        wasGrounded = IsGrounded;
         currentHealth = maxHealth;
     }
 
@@ -50,7 +52,23 @@ public class PlayerScript : MonoBehaviour
     {
         if (isDead) return;
 
-       
+        IsGrounded = Physics2D.OverlapCircle(legs.position, groundRadius, Ground);
+
+        if (IsGrounded==true && Input.GetKeyDown(KeyCode.Space))
+        {
+            rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
+        }
+
+
+        if (!IsGrounded)
+        {
+            animator.SetBool("Jumping", true);
+        }
+        else
+        {
+            animator.SetBool("Jumping", false);
+        }
+
         if (isInvincible)
         {
             invincibilityTimer -= Time.deltaTime;
@@ -72,14 +90,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-     
-        if (IsGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
-            animator.SetTrigger("Jump");
-        }
 
-  
         HorizontalMove = Input.GetAxisRaw("Horizontal") * speed;
         animator.SetFloat("HorizontalMove", Mathf.Abs(HorizontalMove));
 
@@ -93,12 +104,6 @@ public class PlayerScript : MonoBehaviour
             Flip();
         }
 
-    
-        if (IsGrounded != wasGrounded)
-        {
-            animator.SetBool("Jumping", !IsGrounded);
-            wasGrounded = IsGrounded;
-        }
     }
 
     public void TakeDamage(int damage)
@@ -177,7 +182,7 @@ public class PlayerScript : MonoBehaviour
         {
             Vector2 targetVelocity = new Vector2(HorizontalMove * 10f, rd.velocity.y);
             rd.velocity = targetVelocity;
-            CheckGround();
+           
         }
     }
 
@@ -188,17 +193,6 @@ public class PlayerScript : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
     }
-
-    private void CheckGround()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(
-            new Vector2(transform.position.x, transform.position.y + groundOffsetY),
-            groundRadius
-        );
-
-        IsGrounded = colliders.Length > 1;
-    }
-
 
     public int GetCurrentHealth()
     {

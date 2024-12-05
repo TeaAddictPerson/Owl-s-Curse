@@ -17,7 +17,7 @@ TagManager:
   - Small Enemies
   - DeadEnemies
   - Background
-  - 
+  - Ground
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1249140875
     locked: 0
