@@ -18,9 +18,9 @@ TagManager:
   - DeadEnemies
   - Background
   - Ground
-  - 
-  - 
-  - 
+  - Objects
+  - BossTrees
+  - Feathers
   - 
   - 
   - 
@@ -42,9 +42,18 @@ TagManager:
   - name: Background
     uniqueID: 3212457097
     locked: 0
+  - name: Objects
+    uniqueID: 1761861449
+    locked: 0
+  - name: BossTrees
+    uniqueID: 2877048303
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Ground
     uniqueID: 1249140875
+    locked: 0
+  - name: Feathers
+    uniqueID: 4197376879
     locked: 0
