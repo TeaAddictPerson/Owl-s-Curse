@@ -28,6 +28,13 @@ public class BossEyesController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator не найден на объекте!");
+            return;
+        }
+        Debug.Log("Animator успешно найден");
+
         startPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         StartCoroutine(EyesCycle());
@@ -35,33 +42,39 @@ public class BossEyesController : MonoBehaviour
 
     private void CheckPlayer()
     {
-        if (!eyesOpen || isAttacking || player == null) return;
+        if (!eyesOpen || isAttacking) return;
 
+       
         Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
         if (playerCollider != null)
         {
             Vector2 directionToPlayer = (playerCollider.transform.position - transform.position).normalized;
 
+         
             RaycastHit2D[] hits = Physics2D.RaycastAll(
                 transform.position,
                 directionToPlayer,
                 detectionRadius
             );
 
+      
             System.Array.Sort(hits, (a, b) =>
                 a.distance.CompareTo(b.distance));
 
             bool playerFound = false;
             bool treeFound = false;
 
+           
             foreach (RaycastHit2D hit in hits)
             {
+              
                 if (((1 << hit.collider.gameObject.layer) & treeLayer) != 0)
                 {
                     treeFound = true;
                     break;
                 }
 
+             
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     playerFound = true;
@@ -69,6 +82,7 @@ public class BossEyesController : MonoBehaviour
                 }
             }
 
+         
             if (playerFound && !treeFound)
             {
                 StartCoroutine(AttackPlayer());
@@ -82,44 +96,49 @@ public class BossEyesController : MonoBehaviour
 
         isAttacking = true;
 
-        spriteRenderer.sprite = angrySprite;
+        
+        StopCoroutine(EyesCycle());
+
+       
         animator.SetTrigger("Angry");
 
         Debug.Log("Босс атакует");
 
+        
         yield return new WaitForSeconds(0.5f);
 
         float elapsedTime = 0;
         Vector3 startPos = transform.position;
 
+      
         while (elapsedTime < 1.0f && Vector2.Distance(transform.position, player.position) > 0.1f)
         {
-            if (Vector2.Distance(transform.position, player.position) > detectionRadius)
-            {
-                Debug.Log("Игрок сбежал!");
-                break;
-            }
             elapsedTime += Time.deltaTime * attackSpeed;
             transform.position = Vector3.Lerp(startPos, player.position, elapsedTime);
             yield return null;
         }
 
+       
         if (Vector2.Distance(transform.position, player.position) <= 0.5f)
         {
             PlayerScript playerScript = player.GetComponent<PlayerScript>();
             if (playerScript != null)
             {
-                Debug.Log("Убиваем игрока");
-                playerScript.Die();
+                Debug.Log("Killing player!");
+                playerScript.TakeDamage(100);
             }
         }
 
+       
         yield return new WaitForSeconds(1f);
         transform.position = startPosition;
 
-        spriteRenderer.sprite = normalSprite;
+      
+        animator.SetTrigger("OpenEyes");
+
         isAttacking = false;
 
+     
         StartCoroutine(EyesCycle());
     }
 
@@ -127,10 +146,26 @@ public class BossEyesController : MonoBehaviour
     {
         while (!isAttacking)
         {
-            eyesOpen = true;
-            spriteRenderer.sprite = normalSprite;
-            animator.SetTrigger("OpenEyes");
+     
+            eyesOpen = false;
+            animator.SetTrigger("CloseEyes");
+            Debug.Log("Начинаем закрывать глаза");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Глаза полностью закрыты");
 
+            
+            Debug.Log($"Держим глаза закрытыми {eyesClosedDuration} секунд");
+            yield return new WaitForSeconds(eyesClosedDuration);
+            Debug.Log("Заканчиваем период закрытых глаз");
+
+            
+            eyesOpen = true;
+            animator.SetTrigger("OpenEyes");
+            Debug.Log("Начинаем открывать глаза");
+            yield return new WaitForSeconds(0.5f); 
+            Debug.Log("Глаза полностью открыты");
+
+           
             float checkTimer = eyesOpenDuration;
             while (checkTimer > 0 && !isAttacking && player != null)
             {
@@ -141,22 +176,16 @@ public class BossEyesController : MonoBehaviour
                 checkTimer -= Time.deltaTime;
                 yield return null;
             }
-
-            if (!isAttacking)
-            {
-                eyesOpen = false;
-                spriteRenderer.sprite = eyesClosedSprite;
-                animator.SetTrigger("CloseEyes");
-                yield return new WaitForSeconds(eyesClosedDuration);
-            }
         }
     }
 
     void OnDrawGizmos()
     {
+       
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
 
+       
         if (player != null)
         {
             Gizmos.color = Color.yellow;
