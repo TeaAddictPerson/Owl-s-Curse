@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
 
     [Header("Здоровье")]
     public int maxHealth = 15;
-    private int currentHealth;
+    public int currentHealth;
     public float invincibilityDuration = 1f; 
     private float invincibilityTimer = 0f;
     private bool isInvincible = false;
