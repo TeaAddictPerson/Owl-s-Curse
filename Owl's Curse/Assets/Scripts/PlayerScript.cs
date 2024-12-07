@@ -38,9 +38,15 @@ public class PlayerScript : MonoBehaviour
     public Transform legs;
     public LayerMask Ground;
 
-
-
     public bool isDead = false;
+
+    [Header("Настройки скольжения")]
+    public float dashForce = 20f;        
+    public float dashDuration = 0.2f;   
+    public float dashCooldown = 1f;    
+    private bool canDash = true;         
+    private bool isDashing = false;      
+    private float dashCooldownTimer = 0f;
 
     void Start()
     {
@@ -57,6 +63,21 @@ public class PlayerScript : MonoBehaviour
         if (IsGrounded==true && Input.GetKeyDown(KeyCode.Space))
         {
             rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && Mathf.Abs(HorizontalMove) > 0)
+        {
+            StartCoroutine(Dash());
+        }
+
+    
+        if (!canDash)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+            if (dashCooldownTimer <= 0)
+            {
+                canDash = true;
+            }
         }
 
 
@@ -136,7 +157,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         isDead = true;
 
@@ -178,7 +199,7 @@ public class PlayerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isDead)
+        if (!isDead && !isDashing)
         {
             Vector2 targetVelocity = new Vector2(HorizontalMove * 10f, rd.velocity.y);
             rd.velocity = targetVelocity;
@@ -202,5 +223,32 @@ public class PlayerScript : MonoBehaviour
     public int GetMaxHealth()
     {
         return maxHealth;
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        dashCooldownTimer = dashCooldown;
+
+        
+        float originalGravity = rd.gravityScale;
+        rd.gravityScale = 0;
+
+        // Определяем направление скольжения
+        float dashDirection = FacingRight ? 1f : -1f;
+
+        // Устанавливаем скорость
+        rd.velocity = new Vector2(dashDirection * dashForce, 0f);
+
+        // Запускаем анимацию скольжения
+        animator.SetTrigger("Dash");
+
+        // Ждём окончания скольжения
+        yield return new WaitForSeconds(dashDuration);
+
+        // Восстанавливаем гравитацию
+        rd.gravityScale = originalGravity;
+        isDashing = false;
     }
 }

@@ -79,9 +79,9 @@
     <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
     <Compile Include="Assets\Scripts\AddUserCheck.cs" />
+    <Compile Include="Assets\Scripts\BossEyesController.cs" />
     <Compile Include="Assets\Scripts\ButtonStateController.cs" />
     <Compile Include="Assets\Scripts\CheckUser.cs" />
-    <Compile Include="Assets\Scripts\FollowUI.cs" />
     <Compile Include="Assets\Scripts\FrameSwitch.cs" />
     <Compile Include="Assets\Scripts\Frog.cs" />
     <Compile Include="Assets\Scripts\IDamageable.cs" />

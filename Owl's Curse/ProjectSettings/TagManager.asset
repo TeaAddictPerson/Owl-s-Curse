@@ -21,8 +21,8 @@ TagManager:
   - Objects
   - BossTrees
   - Feathers
-  - 
-  - 
+  - forestboss
+  - Player
   - 
   - 
   - 
@@ -45,6 +45,9 @@ TagManager:
   - name: Objects
     uniqueID: 1761861449
     locked: 0
+  - name: ForestBoss
+    uniqueID: 2947352391
+    locked: 0
   - name: BossTrees
     uniqueID: 2877048303
     locked: 0
@@ -56,4 +59,7 @@ TagManager:
     locked: 0
   - name: Feathers
     uniqueID: 4197376879
+    locked: 0
+  - name: Player
+    uniqueID: 3666400309
     locked: 0
