@@ -94,7 +94,7 @@ public class BossEyesController : MonoBehaviour
        
         animator.SetTrigger("Angry");
 
-        Debug.Log("Boss is attacking!"); 
+        Debug.Log("Босс атакует"); 
 
        
         yield return new WaitForSeconds(0.5f);
@@ -115,7 +115,7 @@ public class BossEyesController : MonoBehaviour
             PlayerScript playerScript = player.GetComponent<PlayerScript>();
             if (playerScript != null)
             {
-                Debug.Log("Killing player!"); 
+                Debug.Log("убиваем гг"); 
                 playerScript.Die();
             }
         }
