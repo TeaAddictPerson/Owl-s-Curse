@@ -7,23 +7,26 @@ public class Frog : MonoBehaviour, IDamageable
     private int currentHealth;
     private Collider2D frogCollider;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
 
     [Header("Преследование")]
     public float moveSpeed = 3f;
     public float jumpForce = 3f;
-    public float detectionRange = 5f; 
+    public float detectionRange = 5f;
     public float maxChaseDistance = 8f; 
-    public float attackRange = 1f; 
+    public float attackRange = 1f;
     public float attackCooldown = 2f; 
     private float lastAttackTime;
 
     private Transform player;
+    private bool isDead = false;
 
     void Start()
     {
         currentHealth = maxHealth;
         frogCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (animator == null)
         {
@@ -37,10 +40,22 @@ public class Frog : MonoBehaviour, IDamageable
         }
 
         lastAttackTime = -attackCooldown;
+
+        if (isDead)
+        {
+            animator.SetBool("IsDied", true);
+            gameObject.layer = LayerMask.NameToLayer("DeadEnemies");
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
+            if (frogCollider != null)
+                frogCollider.enabled = false;
+        }
     }
 
     void Update()
     {
+        if (isDead) return;
+
         if (currentHealth <= 0 || player == null || animator == null) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -112,13 +127,12 @@ public class Frog : MonoBehaviour, IDamageable
     void Die()
     {
         Debug.Log("Жаба умерла");
+        isDead = true;
         animator.SetBool("IsDied", true);
         gameObject.layer = LayerMask.NameToLayer("DeadEnemies");
 
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
-
-        enabled = false;
     }
 
     void OnDrawGizmosSelected()
@@ -128,5 +142,29 @@ public class Frog : MonoBehaviour, IDamageable
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    void OnBecameInvisible()
+    {
+        if (isDead && spriteRenderer != null)
+        {
+            Debug.Log($"Мертвая жаба {gameObject.name} стала невидимой");
+            spriteRenderer.enabled = false;
+
+            if (animator != null)
+                animator.enabled = false;
+        }
+    }
+
+    void OnBecameVisible()
+    {
+        if (isDead && spriteRenderer != null)
+        {
+            Debug.Log($"Мертвая жаба {gameObject.name} стала видимой");
+            spriteRenderer.enabled = true;
+
+            if (animator != null)
+                animator.enabled = true;
+        }
     }
 }
