@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
             rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && Mathf.Abs(HorizontalMove) > 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && Mathf.Abs(HorizontalMove) > 0 && (IsGrounded = true))
         {
             StartCoroutine(Dash());
         }
@@ -235,19 +235,19 @@ public class PlayerScript : MonoBehaviour
         float originalGravity = rd.gravityScale;
         rd.gravityScale = 0;
 
-        // Определяем направление скольжения
+        
         float dashDirection = FacingRight ? 1f : -1f;
 
-        // Устанавливаем скорость
+ 
         rd.velocity = new Vector2(dashDirection * dashForce, 0f);
 
-        // Запускаем анимацию скольжения
+       
         animator.SetTrigger("Dash");
 
-        // Ждём окончания скольжения
+       
         yield return new WaitForSeconds(dashDuration);
 
-        // Восстанавливаем гравитацию
+      
         rd.gravityScale = originalGravity;
         isDashing = false;
     }
