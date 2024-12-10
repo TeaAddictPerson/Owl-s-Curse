@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Frog : MonoBehaviour, IDamageable
+public class Frog : MonoBehaviour, IDamageable, ISanityDamage
 {
     public Animator animator;
     public int maxHealth = 10;
@@ -17,6 +17,9 @@ public class Frog : MonoBehaviour, IDamageable
     public float attackRange = 1f;
     public float attackCooldown = 2f; 
     private float lastAttackTime;
+
+    [Header("Урон рассудку")]
+    public float sanityDamage = 0.2f;
 
     private Transform player;
     private bool isDead = false;
@@ -104,7 +107,7 @@ public class Frog : MonoBehaviour, IDamageable
         if (playerScript != null)
         {
             Debug.Log("Player found, attempting to deal damage");
-            playerScript.TakeDamage(1);
+            playerScript.TakeDamage(1, false, this); 
             animator.SetTrigger("Attack");
         }
         else
@@ -122,6 +125,11 @@ public class Frog : MonoBehaviour, IDamageable
         {
             Die();
         }
+    }
+
+    public float GetSanityDamage()
+    {
+        return sanityDamage;
     }
 
     void Die()

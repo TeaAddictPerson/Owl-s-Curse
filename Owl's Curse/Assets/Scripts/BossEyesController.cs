@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossEyesController : MonoBehaviour
+public class BossEyesController : MonoBehaviour, ISanityDamage
 {
     [Header("Настройки глаз")]
     public float eyesOpenDuration = 3f;
@@ -24,6 +24,13 @@ public class BossEyesController : MonoBehaviour
 
     private Transform player;
     private Vector3 startPosition;
+
+    [Header("Урон рассудку")]
+    public float sanityDamage = 100f; 
+    public float GetSanityDamage()
+    {
+        return sanityDamage;
+    }
 
     void Start()
     {
@@ -116,7 +123,7 @@ public class BossEyesController : MonoBehaviour
             if (playerScript != null)
             {
                 Debug.Log("Наносим урон игроку!");
-                playerScript.TakeDamage(100);
+                playerScript.TakeDamage(100, false, this);
 
                 if (playerScript.currentHealth <= 0)
                 {
