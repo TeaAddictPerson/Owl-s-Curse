@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -47,6 +48,10 @@ public class PlayerScript : MonoBehaviour
     private bool canDash = true;         
     private bool isDashing = false;      
     private float dashCooldownTimer = 0f;
+
+    [Header("Взаимодействие")]
+    private InteractableBase currentInteractable;
+    [SerializeField] private TextMeshProUGUI promptText;
 
     void Start()
     {
@@ -124,7 +129,7 @@ public class PlayerScript : MonoBehaviour
         {
             Flip();
         }
-
+        HandleInteraction();
     }
 
     public void TakeDamage(int damage)
@@ -250,5 +255,53 @@ public class PlayerScript : MonoBehaviour
       
         rd.gravityScale = originalGravity;
         isDashing = false;
+    }
+
+    private void HandleInteraction()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2f);
+
+        InteractableBase closestInteractable = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var collider in colliders)
+        {
+            var interactable = collider.GetComponent<InteractableBase>();
+            if (interactable != null && interactable.IsPlayerInRange(transform))
+            {
+                float distance = Vector2.Distance(transform.position, interactable.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestInteractable = interactable;
+                }
+            }
+        }
+
+        currentInteractable = closestInteractable;
+
+        if (promptText != null)
+        {
+            if (currentInteractable != null)
+            {
+                promptText.text = currentInteractable.GetInteractionPrompt();
+                promptText.gameObject.SetActive(true);
+            }
+            else
+            {
+                promptText.gameObject.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
+        {
+            currentInteractable.Interact();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, 2f);
     }
 }
