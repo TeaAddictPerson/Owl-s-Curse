@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19258557}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -93.57674, y: 4.435087, z: 28.680542}
+  m_LocalPosition: {x: -93.506004, y: 4.3150883, z: 28.680542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1912076048}
@@ -2578,6 +2578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 100933382}
   - component: {fileID: 100933383}
+  - component: {fileID: 100933385}
   m_Layer: 12
   m_Name: bench
   m_TagString: Interactable
@@ -2649,6 +2650,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &100933385
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100933381}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.26, y: 0.98}
+    newSize: {x: 1.26, y: 0.98}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.26, y: 0.98}
+  m_EdgeRadius: 0
 --- !u!1 &106817293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,7 +2746,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107938738}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -74.416756, y: 4.805209, z: 4.129072}
+  m_LocalPosition: {x: -74.34602, y: 4.68521, z: 4.129072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 728638413}
@@ -4494,7 +4521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328079529}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -78.046104, y: 3.1603231, z: 14.980238}
+  m_LocalPosition: {x: -77.97537, y: 3.0403242, z: 14.980238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 866386867}
@@ -4732,7 +4759,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346018518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -179.39668, y: 10.170949, z: -1.5323019}
+  m_LocalPosition: {x: -179.62259, y: 10.05095, z: -1.5323019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1481982970}
@@ -7521,6 +7548,8 @@ GameObject:
   m_Component:
   - component: {fileID: 427738472}
   - component: {fileID: 427738474}
+  - component: {fileID: 427738473}
+  - component: {fileID: 427738475}
   m_Layer: 12
   m_Name: forest_stuff_2
   m_TagString: Untagged
@@ -7542,6 +7571,32 @@ Transform:
   m_Father: {fileID: 1564869710}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &427738473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427738471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f771fb77025446b91a54370bcc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  commentPanel: {fileID: 480474879}
+  commentText: {fileID: 355904676}
+  characterComment: "\u041F\u043E\u0445\u043E\u0436\u0435 \u0437\u0430\u0440\u0430\u0436\u0435\u043D\u0438\u0435
+    \u043F\u0440\u043E\u0434\u0432\u0438\u043D\u0443\u043B\u043E\u0441\u044C \u0431\u043E\u043B\u044C\u0448\u0435
+    \u0447\u0435\u043C \u0432\u044B \u043E\u0436\u0438\u0434\u0430\u043B\u0438. \u0412\u0438\u0434
+    \u043D\u0435\u043A\u043E\u043B\u0435\u0431\u0438\u043C\u043E\u0433\u043E \u043F\u043D\u044F,
+    \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0434\u043E \u0441\u0438\u0445 \u043F\u043E\u0440
+    \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u044F\u0435\u0442\u0441\u044F, 
+    \u043D\u0430\u043F\u043E\u043B\u043D\u044F\u0435\u0442 \u0432\u0430\u0441 \u0440\u0435\u0448\u0438\u043C\u043E\u0441\u0442\u044C\u044E.
+    \n\u0421\u0442\u0440\u0430\u043D\u043D\u043E, \u043E\u0442\u043A\u0443\u0434\u0430
+    \u044D\u0442\u043E ?"
 --- !u!212 &427738474
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7593,6 +7648,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &427738475
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427738471}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5333333, y: 1.3333334}
+    newSize: {x: 1.5333333, y: 1.3333334}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5333333, y: 1.3333334}
+  m_EdgeRadius: 0
 --- !u!1 &442405739
 GameObject:
   m_ObjectHideFlags: 3
@@ -9050,7 +9131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671516785}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.735085, y: 2.7184887, z: 21.588133}
+  m_LocalPosition: {x: -47.664352, y: 2.5984898, z: 21.588133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 777487003}
@@ -11119,7 +11200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780441744}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.888493, y: 2.7867527, z: -8.268037}
+  m_LocalPosition: {x: -19.848494, y: 2.6667538, z: -8.268037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 442405740}
@@ -11421,7 +11502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847502021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.72732, y: 4.8239775, z: 5.1226416}
+  m_LocalPosition: {x: -17.656591, y: 4.7039785, z: 5.1226416}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 411859394}
@@ -11593,7 +11674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870008244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -170.30257, y: 5.8872986, z: 109.113434}
+  m_LocalPosition: {x: -170.48543, y: 5.7672997, z: 109.113434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1416991972}
@@ -12898,6 +12979,7 @@ GameObject:
   - component: {fileID: 998939376}
   - component: {fileID: 998939378}
   - component: {fileID: 998939377}
+  - component: {fileID: 998939379}
   m_Layer: 12
   m_Name: bench
   m_TagString: Untagged
@@ -12995,6 +13077,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &998939379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998939375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f771fb77025446b91a54370bcc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  commentPanel: {fileID: 480474879}
+  commentText: {fileID: 355904676}
+  characterComment: "\u0412\u044B \u0432\u0438\u0434\u0435\u0442\u0435 \u043E\u0434\u0438\u043D\u043E\u043A\u043E
+    \u0441\u0442\u043E\u044F\u0449\u0443\u044E \u0441\u043A\u0430\u043C\u0435\u0439\u043A\u0443,
+    \u043E\u043D\u0430 \u043F\u043E\u043A\u0430\u0437\u0430\u043B\u0430\u0441\u044C
+    \u0431\u044B \u0432\u0430\u043C \u043E\u0447\u0435\u043D\u044C \u0443\u044E\u0442\u043D\u043E\u0439,
+    \u0435\u0441\u043B\u0438 \u0431\u044B \u043D\u0435 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u0438\u0435
+    \u0432\u043E\u043A\u0440\u0443\u0433"
 --- !u!1 &1040697545
 GameObject:
   m_ObjectHideFlags: 0
@@ -13338,6 +13443,7 @@ GameObject:
   - component: {fileID: 1135522676}
   - component: {fileID: 1135522678}
   - component: {fileID: 1135522677}
+  - component: {fileID: 1135522679}
   m_Layer: 12
   m_Name: small_stuff_9
   m_TagString: Interactable
@@ -13436,6 +13542,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1135522679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135522675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f771fb77025446b91a54370bcc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  commentPanel: {fileID: 480474879}
+  commentText: {fileID: 355904676}
+  characterComment: "\u0412\u044B \u0432\u0438\u0434\u0438\u0442\u0435 \u043F\u043E\u0442\u0440\u0435\u043F\u0430\u043D\u043D\u044B\u0439
+    \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C.  \n\u041D\u0430\u043B\u0435\u0432\u043E
+    - \u0426\u0432\u0435\u0442\u043E\u0447\u043D\u044B\u0435 \u043F\u043E\u043B\u044F  
+    \n\u041D\u0430\u043F\u0440\u0430\u0432\u043E - \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0439
+    \u043B\u0435\u0441    \n\u041D\u0430 \u0441\u0442\u043E\u043B\u0431\u0438\u043A\u0435
+    \u0432\u044B\u0446\u0430\u0440\u0430\u043F\u0430\u043D\u0430 \u043D\u0430\u0434\u043F\u0438\u0441\u044C
+    \"\u0411\u0435\u0440\u0435\u0433\u0438\u0442\u0435\u0441\u044C \u0437\u0434\u0435\u0448\u043D\u0435\u0433\u043E
+    \u043A\u043E\u0442\u0438\u043A\u0430\""
 --- !u!1 &1146465796
 GameObject:
   m_ObjectHideFlags: 0
@@ -13514,7 +13645,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146465796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.332542, y: 19.051609, z: -10}
+  m_LocalPosition: {x: 20.85173, y: 19.123367, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13804,7 +13935,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194204046}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -111.09102, y: 3.2109861, z: 92.49963}
+  m_LocalPosition: {x: -111.27388, y: 3.0909872, z: 92.49963}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1808207993}
@@ -13971,7 +14102,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211426846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.18, y: 0.791, z: 1.7319628}
+  m_LocalPosition: {x: -4.14, y: -1.2, z: 1.7319628}
   m_LocalScale: {x: 0.61126274, y: 0.61126274, z: 0.61126274}
   m_Children: []
   m_Father: {fileID: 1546021572}
@@ -14069,8 +14200,8 @@ MonoBehaviour:
   interactionRadius: 2
   promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
     \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
-  commentPanel: {fileID: 480474879}
-  commentText: {fileID: 355904676}
+  commentPanel: {fileID: 2056535062}
+  commentText: {fileID: 455474706}
   characterComment: "\u0412\u043F\u0435\u0440\u0435\u0434\u0438 \u0430\u0433\u0440\u043E
     \u0436\u0430\u0431\u044B \u0441 \u0446\u0432\u0435\u0442\u043E\u0447\u043A\u043E\u043C
     \u043D\u0430 \u0436\u043E\u043F\u0435"
@@ -14237,6 +14368,7 @@ GameObject:
   - component: {fileID: 1221440294}
   - component: {fileID: 1221440296}
   - component: {fileID: 1221440295}
+  - component: {fileID: 1221440297}
   m_Layer: 0
   m_Name: small_stuff_0
   m_TagString: Untagged
@@ -14343,6 +14475,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1221440297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221440293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f771fb77025446b91a54370bcc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  commentPanel: {fileID: 480474879}
+  commentText: {fileID: 355904676}
+  characterComment: "\u0412\u044B \u0432\u0438\u0434\u0435\u0442\u0435 \u0431\u0440\u0435\u0432\u043D\u043E
+    \u043F\u043E\u043A\u0440\u044B\u0442\u043E\u0435 \u043A\u0440\u0430\u0441\u043D\u044B\u043C
+    \u043C\u0445\u043E\u043C. \u0412\u0438\u0434\u0438\u043C\u043E \u043F\u043E\u0434\u0432\u0435\u0440\u0433\u043B\u043E\u0441\u044C
+    \u0437\u0430\u0440\u0430\u0436\u0435\u043D\u0438\u044E, \u0432\u044B \u043D\u0435
+    \u0443\u0434\u0438\u0432\u0438\u0442\u0435\u0441\u044C \u0435\u0441\u043B\u0438
+    \u0441\u043A\u043E\u0440\u043E \u0432 \u043D\u0435\u043C \u043F\u043E\u0441\u0435\u043B\u0438\u0442\u0441\u044F
+    \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u043E\u0435, \u0441\u0438\u043D\u0435\u0435
+    \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043E \u0441 \u0445\u043E\u0440\u043E\u0448\u0438\u043C
+    \u0432\u043A\u0443\u0441\u043E\u043C \u0432 \u043C\u0443\u0437\u044B\u043A\u0435"
 --- !u!1 &1254395796
 GameObject:
   m_ObjectHideFlags: 0
@@ -18334,6 +18492,7 @@ GameObject:
   - component: {fileID: 1430697971}
   - component: {fileID: 1430697973}
   - component: {fileID: 1430697972}
+  - component: {fileID: 1430697974}
   m_Layer: 12
   m_Name: small_stuff_3
   m_TagString: Interactable
@@ -18432,6 +18591,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1430697974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430697970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9334a26e9c74a7d4c9e558b4f573931b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  bookPanel: {fileID: 2056535062}
+  bookText: {fileID: 455474706}
+  bookContent: "\u0412\u0442\u043E\u0440\u043E\u0439 \u043A\u0443\u0441\u043E\u043A
+    \u043B\u043E\u0440\u0430 "
 --- !u!1 &1438277268
 GameObject:
   m_ObjectHideFlags: 0
@@ -18493,7 +18671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438277268}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3090496, y: 0.9715214, z: -8.621754}
+  m_LocalPosition: {x: -3.359949, y: 0.9715214, z: -8.621754}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1985759552}
@@ -24551,6 +24729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2064937991}
   - component: {fileID: 2064937992}
+  - component: {fileID: 2064937994}
   - component: {fileID: 2064937993}
   m_Layer: 12
   m_Name: small_stuff_9
@@ -24624,19 +24803,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &2064937993
-BoxCollider:
+--- !u!114 &2064937993
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064937990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f771fb77025446b91a54370bcc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  commentPanel: {fileID: 480474879}
+  commentText: {fileID: 355904676}
+  characterComment: "\u0412\u044B \u0432\u0438\u0434\u0438\u0442\u0435 \u043F\u043E\u0442\u0440\u0435\u043F\u0430\u043D\u043D\u044B\u0439
+    \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C.  \n\u041D\u0430\u043B\u0435\u0432\u043E
+    - \u0428\u0430\u0445\u0442\u044B   \n\u041D\u0430\u043F\u0440\u0430\u0432\u043E
+    - \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0439 \u043B\u0435\u0441    "
+--- !u!61 &2064937994
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064937990}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.25, y: 2.2}
+    newSize: {x: 1.25, y: 2.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.25, y: 2.2, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.25, y: 2.2}
+  m_EdgeRadius: 0
 --- !u!1 &2094700532
 GameObject:
   m_ObjectHideFlags: 0
@@ -24647,6 +24860,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2094700533}
   - component: {fileID: 2094700534}
+  - component: {fileID: 2094700536}
+  - component: {fileID: 2094700535}
   m_Layer: 12
   m_Name: forest_stuff_1
   m_TagString: Untagged
@@ -24719,6 +24934,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2094700535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094700532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2f771fb77025446b91a54370bcc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRadius: 2
+  promptMessage: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 E \u0434\u043B\u044F
+    \u0432\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F"
+  commentPanel: {fileID: 480474879}
+  commentText: {fileID: 355904676}
+  characterComment: "\u042D\u0442\u043E \u043F\u0440\u043E\u0441\u0442\u043E \u043A\u0430\u043C\u0435\u043D\u044C.
+    \u0427\u0435\u043C \u043E\u043D \u0432\u0430\u043C \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u0435\u043D
+    ? \n\u0415\u0434\u0438\u043D\u0441\u0442\u0432\u0435\u043D\u043D\u0430\u044F
+    \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043D\u0430\u044F \u0447\u0430\u0441\u0442\u044C
+    \u044D\u0442\u043E\u0433\u043E \u043A\u0430\u043C\u043D\u044F - \u044D\u0442\u043E
+    \u043F\u0435\u0439\u0437\u0430\u0436 \u043D\u0430 \u043A\u043E\u0442\u043E\u0440\u043E\u043C
+    \u043E\u043D \u0440\u0430\u0441\u043F\u043E\u043B\u043E\u0436\u0435\u043D. \n\u0420\u0430\u0437
+    \u0432\u044B \u0432\u0441\u0451 \u0435\u0449\u0451 \u044D\u0442\u043E \u0447\u0438\u0442\u0430\u0435\u0442\u0435,
+    \u0437\u043D\u0430\u0447\u0438\u0442 \u0432\u0430\u043C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E
+    \u043D\u0440\u0430\u0432\u0438\u0442\u0441\u044F \u044D\u0442\u043E \u043C\u0435\u0441\u0442\u043E"
+--- !u!61 &2094700536
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094700532}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.6333333, y: 1.3666667}
+    newSize: {x: 1.6333333, y: 1.3666667}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.6333333, y: 1.3666667}
+  m_EdgeRadius: 0
 --- !u!1 &2097548236
 GameObject:
   m_ObjectHideFlags: 0
