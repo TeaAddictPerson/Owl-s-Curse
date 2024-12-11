@@ -37,6 +37,7 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
 
     private Vector3 originalScale;
     private bool facingRight = true;
+    private SpriteRenderer spriteRenderer;
     public float GetSanityDamage()
     {
         return sanityDamage;
@@ -251,8 +252,22 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         );
         animator.SetTrigger("Die");
         GetComponent<Collider2D>().enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("DeadEnemies");
         rb.isKinematic = true;
         this.enabled = false;
+        
+    }
+
+      void OnBecameInvisible()
+    {
+        if (isDead && spriteRenderer != null)
+        {
+            Debug.Log($"Ворон сдох {gameObject.name} и пропал");
+            spriteRenderer.enabled = false;
+
+            if (animator != null)
+                animator.enabled = false;
+        }
     }
 
     private void OnDrawGizmosSelected()
