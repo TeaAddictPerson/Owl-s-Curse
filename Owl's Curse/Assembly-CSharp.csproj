@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\ButtonStateController.cs" />
     <Compile Include="Assets\Scripts\CheckUser.cs" />
     <Compile Include="Assets\Scripts\CinematicCamera.cs" />
+    <Compile Include="Assets\Scripts\DisapperTrigger.cs" />
     <Compile Include="Assets\Scripts\FrameSwitch.cs" />
     <Compile Include="Assets\Scripts\Frog.cs" />
     <Compile Include="Assets\Scripts\IDamageable.cs" />

@@ -5,7 +5,7 @@ using System.Collections;
 public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
 {
     [Header("Основные параметры")]
-    public GameObject healthBarContainer; 
+    public GameObject healthBarContainer;
     public int maxHealth = 1000;
     private int currentHealth;
     public Image healthBar;
@@ -41,6 +41,15 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
     public bool useGravity = true;
     public float gravityScale = 1f;
 
+    [Header("Проверка расстояния")]
+    public Vector2 detectionBoxSize = new Vector2(4f, 3f);
+    public Vector2 attackBoxSize = new Vector2(3f, 2f);
+
+    [Header("Настройки смерти")]
+    public Collider2D disappearTrigger;
+
+    private PlayerScript playerScript;
+    private bool isPlayerDead = false;
     private Vector3 originalScale;
     private bool facingRight = true;
     private SpriteRenderer spriteRenderer;
@@ -52,18 +61,11 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
     private float currentY;
     private bool isAwakening = false;
 
-    [Header("Проверка расстояния")]
-    public Vector2 detectionBoxSize = new Vector2(4f, 3f); 
-    public Vector2 attackBoxSize = new Vector2(3f, 2f); 
 
     private bool IsPlayerInRange(Vector2 boxSize, out float distance)
     {
-      
-        Vector2 checkPosition = (Vector2)transform.position + new Vector2(0, 1f); 
-
-       
+        Vector2 checkPosition = (Vector2)transform.position + new Vector2(0, 1f);
         Collider2D[] colliders = Physics2D.OverlapBoxAll(checkPosition, boxSize, 0f);
-
         distance = Vector2.Distance(transform.position, player.position);
 
         foreach (Collider2D collider in colliders)
@@ -81,7 +83,7 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         return sanityDamage;
     }
 
-    private bool isDead = false; 
+    private bool isDead = false;
 
     private void UpdateHealthBar()
     {
@@ -93,6 +95,15 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
 
     private void Start()
     {
+        if (disappearTrigger != null)
+        {
+            DisappearTrigger triggerComponent = disappearTrigger.gameObject.GetComponent<DisappearTrigger>();
+            if (triggerComponent == null)
+            {
+                triggerComponent = disappearTrigger.gameObject.AddComponent<DisappearTrigger>();
+            }
+            triggerComponent.boss = this;
+        }
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -100,13 +111,18 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         originalScale = transform.localScale;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        
         initialPosition = transform.position;
         currentPosition = initialPosition;
         currentY = initialPosition.y;
 
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.simulated = false;
+
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null)
+        {
+            playerScript = player.GetComponent<PlayerScript>();
+        }
 
         animator.Play("RavenBossAwaken", 0, 0f);
         animator.speed = 0;
@@ -125,13 +141,20 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
     {
         if (player == null) return;
 
+        if (playerScript != null && playerScript.isDead && !isPlayerDead)
+        {
+            isPlayerDead = true;
+            OnPlayerDeath();
+            return;
+        }
+
+        if (isPlayerDead) return;
+
         float distanceToPlayer;
         bool playerInDetectionRange = IsPlayerInRange(detectionBoxSize, out distanceToPlayer);
 
-      
         if (!isAwakened && !isAwakening && playerInDetectionRange)
         {
-            isAwakening = true;
             StartCoroutine(AwakeningSequence());
             return;
         }
@@ -142,32 +165,25 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
             return;
         }
 
-       
         if (isAwakened && !isAwakening)
         {
             bool playerInAttackRange = IsPlayerInRange(attackBoxSize, out distanceToPlayer);
+            Debug.Log($"Игрок в атакующем радиусе: {playerInAttackRange}, Расстояние: {distanceToPlayer}");
 
             if (playerInAttackRange)
             {
-              
-                rb.velocity = Vector2.zero;
                 isMoving = false;
                 animator.SetBool("IsWalking", false);
 
-             
                 if (Time.time >= lastAttackTime + attackCooldown)
                 {
-                    bool canUseWings = Time.time >= lastWingAttackTime + wingAttackCooldown;
-                    if (canUseWings)
+                    if (Time.time >= lastWingAttackTime + wingAttackCooldown)
                     {
                         StartCoroutine(WingsPushAttack());
                     }
                     else
                     {
-                        if (Random.value > 0.5f)
-                            StartCoroutine(BeakAttack());
-                        else
-                            StartCoroutine(ClawAttack());
+                        StartCoroutine(Random.value > 0.5f ? BeakAttack() : ClawAttack());
                     }
                 }
             }
@@ -180,13 +196,11 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         }
     }
 
-
     private void FlipBoss(bool toRight)
     {
         if (facingRight != toRight)
         {
             facingRight = toRight;
-           
             transform.localScale = new Vector3(
                 originalScale.x * (facingRight ? 1 : -1),
                 originalScale.y,
@@ -197,9 +211,14 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
 
     private IEnumerator AwakeningSequence()
     {
-        Debug.Log("Starting awakening sequence");
+        if (isAwakening) yield break;
 
-        animator.SetBool("IsWalking", false);
+        Debug.Log("Начинается последовательность пробуждения");
+        isAwakening = true;
+
+        animator.Rebind();
+        animator.Update(0f);
+
         animator.speed = 1;
         animator.SetTrigger("Awaken");
 
@@ -208,47 +227,35 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
             healthBarContainer.SetActive(true);
         }
 
-        transform.localScale = originalScale;
-
         yield return new WaitForSeconds(2f);
+
+        Debug.Log("Пробуждение завершено, начинается движение");
 
         isAwakened = true;
         isAwakening = false;
         rb.simulated = true;
 
-        
         isMoving = true;
         animator.SetBool("IsWalking", true);
-
-       
-        string walkAnimName = "RavenBossWalk"; 
-        animator.Play(walkAnimName, 0, 0f);
-
-        lastAttackTime = Time.time;
-        lastWingAttackTime = Time.time;
     }
 
     private void MoveTowardsPlayer()
     {
         if (player == null) return;
 
-    
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if (distanceToPlayer > attackRange)
-        {
-            Vector2 direction = (player.position - transform.position).normalized;
-            Vector2 newPosition = rb.position + direction * moveSpeed * Time.deltaTime;
-            newPosition.y = currentY;
+        Vector2 direction = (player.position - transform.position).normalized;
+        Vector2 newPosition = rb.position + direction * moveSpeed * Time.deltaTime;
+        newPosition.y = currentY;
 
-            rb.MovePosition(newPosition);
-            FlipBoss(direction.x < 0);
-        }
+        Debug.Log($"Движение к позиции: {newPosition}, Текущая позиция: {rb.position}");
+
+        rb.MovePosition(newPosition);
+        FlipBoss(direction.x < 0);
     }
 
-  
     private IEnumerator BeakAttack()
     {
-        Debug.Log("Starting beak attack");
+        Debug.Log("Начинается атака клювом");
         lastAttackTime = Time.time;
         isMoving = false;
         animator.SetBool("IsWalking", false);
@@ -282,13 +289,13 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
     {
         lastAttackTime = Time.time;
         Vector2 currentPos = rb.position;
-        currentPos.y = currentY; 
+        currentPos.y = currentY;
         rb.MovePosition(currentPos);
 
         FlipBoss((player.position.x - transform.position.x) < 0);
         animator.SetTrigger("ClawAttack");
         yield return new WaitForSeconds(0.5f);
-        Collider2D[] hitPlayers = Physics2D.OverlapBoxAll(clawAttackPoint.position,new Vector2(1.5f, 2f),0f);
+        Collider2D[] hitPlayers = Physics2D.OverlapBoxAll(clawAttackPoint.position, new Vector2(1.5f, 2f), 0f);
         foreach (Collider2D player in hitPlayers)
         {
             PlayerScript playerScript = player.GetComponent<PlayerScript>();
@@ -304,14 +311,14 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         lastWingAttackTime = Time.time;
         lastAttackTime = Time.time;
         Vector2 currentPos = rb.position;
-        currentPos.y = currentY; 
+        currentPos.y = currentY;
         rb.MovePosition(currentPos);
 
         FlipBoss((player.position.x - transform.position.x) < 0);
         animator.SetTrigger("WingsAttack");
         yield return new WaitForSeconds(0.5f);
 
-        Collider2D[] hitPlayers = Physics2D.OverlapBoxAll(wingsAttackPoint.position,new Vector2(2f, 2.5f),0f);
+        Collider2D[] hitPlayers = Physics2D.OverlapBoxAll(wingsAttackPoint.position, new Vector2(2f, 2.5f), 0f);
         foreach (Collider2D player in hitPlayers)
         {
             Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
@@ -328,7 +335,6 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         currentHealth -= damage;
         UpdateHealthBar();
 
-        
         transform.localScale = new Vector3(
             originalScale.x * (facingRight ? 1 : -1),
             originalScale.y,
@@ -362,18 +368,35 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         gameObject.layer = LayerMask.NameToLayer("DeadEnemies");
         rb.isKinematic = true;
         this.enabled = false;
-
-      
-        StartCoroutine(DelayedHideCorpse());
     }
 
-
-    private void OnBecameInvisible()
+    private void OnPlayerDeath()
     {
-      
+        StopAllCoroutines();
+
+        animator.ResetTrigger("Awaken");
+        animator.ResetTrigger("BeakAttack");
+        animator.ResetTrigger("ClawAttack");
+        animator.ResetTrigger("WingsAttack");
+
+        isMoving = false;
+        animator.SetBool("IsWalking", false);
+
+        animator.SetTrigger("Idle");
+
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+        }
+
+        Debug.Log("Игрок мертв, босс возвращается в состояние ожидания");
+    }
+
+    public void OnDisappearTriggerEnter(PlayerScript player)
+    {
         if (isDead)
         {
-            Debug.Log($"Ворон сдох {gameObject.name} и пропал");
+            Debug.Log($"Игрок прошел через триггер, ворон {gameObject.name} исчезает");
             if (spriteRenderer != null)
                 spriteRenderer.enabled = false;
             if (animator != null)
@@ -381,7 +404,10 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         }
     }
 
-
+    public void ResetBossState()
+    {
+        isPlayerDead = false;
+    }
     private void OnBecameVisible()
     {
         if (!isDead && spriteRenderer != null)
@@ -391,7 +417,6 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
                 animator.enabled = true;
         }
     }
-
 
     private void OnDrawGizmosSelected()
     {
@@ -421,19 +446,8 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         }
     }
 
-    private IEnumerator DelayedHideCorpse()
-    {
-        yield return new WaitForSeconds(5f); 
-
-        if (spriteRenderer != null)
-            spriteRenderer.enabled = false;
-        if (animator != null)
-            animator.enabled = false;
-    }
-
     private void OnDrawGizmos()
     {
-
         Gizmos.color = Color.yellow;
         Vector2 detectionCenter = (Vector2)transform.position + new Vector2(0, 1f);
         Gizmos.DrawWireCube(detectionCenter, detectionBoxSize);

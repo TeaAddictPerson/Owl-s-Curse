@@ -12043,7 +12043,7 @@ MonoBehaviour:
   invincibilityDuration: 1
   attackPoint: {fileID: 238216765}
   AttackRange: 0.9
-  attackDamage: 1000
+  attackDamage: 10
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -25119,7 +25119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarContainer: {fileID: 362165035}
-  maxHealth: 1000
+  maxHealth: 250
   healthBar: {fileID: 321586120}
   detectionRange: 10
   attackRange: 5
@@ -25136,10 +25136,11 @@ MonoBehaviour:
   sanityDamage: 0.5
   useGravity: 1
   gravityScale: 1
-  bodyCollider: {fileID: 1967273739}
-  feetCollider: {fileID: 1967273743}
   detectionBoxSize: {x: 8, y: 14}
   attackBoxSize: {x: 8, y: 14}
+  disappearTrigger: {fileID: 932183071}
+  bodyCollider: {fileID: 1967273739}
+  feetCollider: {fileID: 1967273743}
 --- !u!95 &1967273741
 Animator:
   serializedVersion: 3
