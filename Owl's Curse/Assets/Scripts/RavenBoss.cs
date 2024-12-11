@@ -5,6 +5,7 @@ using System.Collections;
 public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
 {
     [Header("Основные параметры")]
+    public GameObject healthBarContainer; 
     public int maxHealth = 1000;
     private int currentHealth;
     public Image healthBar;
@@ -58,6 +59,12 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         originalScale = transform.localScale;
+
+        if (healthBarContainer != null)
+        {
+            healthBarContainer.SetActive(false);
+        }
+
         UpdateHealthBar();
     }
 
@@ -197,15 +204,6 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         }
     }
 
-    private IEnumerator AwakeningSequence()
-    {
-        isAwakened = true;
-        
-        transform.localScale = originalScale;
-        animator.SetTrigger("Awaken");
-        yield return new WaitForSeconds(2f);
-    }
-
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -225,11 +223,27 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
             Die();
         }
     }
+    private IEnumerator AwakeningSequence()
+    {
+        isAwakened = true;
+        if (healthBarContainer != null)
+        {
+            healthBarContainer.SetActive(true);
+        }
+
+        transform.localScale = originalScale;
+        animator.SetTrigger("Awaken");
+        yield return new WaitForSeconds(2f);
+    }
 
     private void Die()
     {
         isDead = true;
-       
+        if (healthBarContainer != null)
+        {
+            healthBarContainer.SetActive(false);
+        }
+
         transform.localScale = new Vector3(
             originalScale.x * (facingRight ? 1 : -1),
             originalScale.y,
