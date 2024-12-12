@@ -226,17 +226,19 @@ public class PlayerScript : MonoBehaviour
     public void Die()
     {
         isDead = true;
-
-      
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-
-     
         animator.SetBool("IsDead", true);
-
-        rd.isKinematic= true;
+        rd.isKinematic = true;
         rd.velocity = Vector2.zero;
 
-    
+        DeathScreenManager deathScreen = FindObjectOfType<DeathScreenManager>();
+        if (deathScreen != null)
+        {
+            deathScreen.ShowDeathScreen();
+        }
+        else
+        {
+            Debug.LogError("DeathScreenManager не найден на сцене!");
+        }
     }
 
     void Attack()

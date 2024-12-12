@@ -45,6 +45,9 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
     public Vector2 detectionBoxSize = new Vector2(4f, 3f);
     public Vector2 attackBoxSize = new Vector2(3f, 2f);
 
+    [Header("Frame Settings")]
+    public Collider2D frameCollider;
+
     [Header("Настройки смерти")]
     public Collider2D disappearTrigger;
 
@@ -443,6 +446,30 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireCube(wingsAttackPoint.position, new Vector3(2f, 2.5f, 0f));
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && frameCollider != null && other.transform.GetComponent<Collider2D>() == frameCollider)
+        {
+            if (healthBarContainer != null)
+            {
+                healthBarContainer.SetActive(false);
+                Debug.Log("Скрываем шкалу здоровья"); // для отладки
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && frameCollider != null && other.transform.GetComponent<Collider2D>() == frameCollider)
+        {
+            if (healthBarContainer != null && isAwakened)
+            {
+                healthBarContainer.SetActive(true);
+                Debug.Log("Показываем шкалу здоровья"); // для отладки
+            }
         }
     }
 
