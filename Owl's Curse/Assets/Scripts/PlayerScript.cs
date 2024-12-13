@@ -239,6 +239,7 @@ public class PlayerScript : MonoBehaviour
         {
             Debug.LogError("DeathScreenManager не найден на сцене!");
         }
+      
     }
 
     void Attack()

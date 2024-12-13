@@ -3111,6 +3111,7 @@ GameObject:
   - component: {fileID: 162934819}
   - component: {fileID: 162934821}
   - component: {fileID: 162934820}
+  - component: {fileID: 162934822}
   m_Layer: 0
   m_Name: CinematicCamSkies
   m_TagString: Untagged
@@ -3185,6 +3186,20 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1663716609}
+--- !u!114 &162934822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162934818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a34599322acd94987ee95db22860ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneBounds: {fileID: 1311240227}
+  transitionSpeed: 2
 --- !u!1 &172949786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,7 +4970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348449187}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -76.5543, y: 2.4092426, z: -10}
+  m_LocalPosition: {x: -75.87427, y: 2.3829439, z: -10}
   m_LocalScale: {x: 0.33453625, y: 0.29220644, z: 1}
   m_Children:
   - {fileID: 612375427}
@@ -14722,7 +14737,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146465796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.539785, y: 18.74971, z: -10}
+  m_LocalPosition: {x: 26.238321, y: 18.77303, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -20332,7 +20347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438277268}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3118649, y: 0.8815212, z: -8.621754}
+  m_LocalPosition: {x: -1.3347874, y: 0.8815212, z: -8.621754}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1985759552}
@@ -26417,7 +26432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarContainer: {fileID: 362165035}
-  maxHealth: 250
+  maxHealth: 850
   healthBar: {fileID: 321586120}
   detectionRange: 10
   attackRange: 5
@@ -26428,10 +26443,10 @@ MonoBehaviour:
   beakAttackPoint: {fileID: 45992674}
   clawAttackPoint: {fileID: 851030328}
   wingsAttackPoint: {fileID: 1164188391}
-  beakDamage: 20
-  clawDamage: 15
+  beakDamage: 25
+  clawDamage: 30
   pushForce: 15
-  sanityDamage: 0.5
+  sanityDamage: 1
   useGravity: 1
   gravityScale: 1
   detectionBoxSize: {x: 8, y: 14}

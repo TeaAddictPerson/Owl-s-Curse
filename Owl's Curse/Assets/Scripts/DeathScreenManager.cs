@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DeathScreenManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class DeathScreenManager : MonoBehaviour
             return;
         }
 
-        // Скрываем все элементы при старте
+       
         deathScreenImage.gameObject.SetActive(false);
         respawnButton.gameObject.SetActive(false);
         deathText.gameObject.SetActive(false);
@@ -44,16 +45,16 @@ public class DeathScreenManager : MonoBehaviour
 
     private IEnumerator ShowDeathScreenElements()
     {
-        // Показываем и анимируем фоновое изображение
+      
         deathScreenImage.gameObject.SetActive(true);
         yield return StartCoroutine(FadeImage(deathScreenImage, 0, 1));
 
-        // Показываем текст
+    
         yield return new WaitForSeconds(elementDelay);
         deathText.gameObject.SetActive(true);
         yield return StartCoroutine(FadeText(deathText, 0, 1));
 
-        // Показываем кнопку
+      
         yield return new WaitForSeconds(elementDelay);
         respawnButton.gameObject.SetActive(true);
         Image buttonImage = respawnButton.GetComponent<Image>();
@@ -164,14 +165,15 @@ public class DeathScreenManager : MonoBehaviour
         if (playerSpawner != null)
         {
             playerSpawner.RespawnPlayerAtLastSave();
+            ReloadCurrentScene();
         }
 
-        // Скрываем все элементы
+      
         deathScreenImage.gameObject.SetActive(false);
         respawnButton.gameObject.SetActive(false);
         deathText.gameObject.SetActive(false);
 
-        // Сбрасываем прозрачность всех элементов
+      
         ResetElementsAlpha();
 
         Debug.Log("Игрок успешно возрожден");
@@ -181,17 +183,17 @@ public class DeathScreenManager : MonoBehaviour
     {
         Color color;
 
-        // Сброс прозрачности изображения
+   
         color = deathScreenImage.color;
         color.a = 1f;
         deathScreenImage.color = color;
 
-        // Сброс прозрачности текста
+      
         color = deathText.color;
         color.a = 1f;
         deathText.color = color;
 
-        // Сброс прозрачности кнопки
+    
         Image buttonImage = respawnButton.GetComponent<Image>();
         if (buttonImage != null)
         {
@@ -207,6 +209,12 @@ public class DeathScreenManager : MonoBehaviour
             color.a = 1f;
             buttonText.color = color;
         }
+    }
+
+    public void ReloadCurrentScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
     private void OnDestroy()
