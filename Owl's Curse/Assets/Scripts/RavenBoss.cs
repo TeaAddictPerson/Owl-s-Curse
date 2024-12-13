@@ -7,7 +7,7 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
     [Header("Основные параметры")]
     public GameObject healthBarContainer;
     public int maxHealth = 1000;
-    private int currentHealth;
+    public int currentHealth;
     public Image healthBar;
     public float detectionRange = 10f;
     private bool isAwakened = false;
@@ -448,31 +448,6 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
             Gizmos.DrawWireCube(wingsAttackPoint.position, new Vector3(2f, 2.5f, 0f));
         }
     }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && frameCollider != null && other.transform.GetComponent<Collider2D>() == frameCollider)
-        {
-            if (healthBarContainer != null)
-            {
-                healthBarContainer.SetActive(false);
-                Debug.Log("Скрываем шкалу здоровья"); // для отладки
-            }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && frameCollider != null && other.transform.GetComponent<Collider2D>() == frameCollider)
-        {
-            if (healthBarContainer != null && isAwakened)
-            {
-                healthBarContainer.SetActive(true);
-                Debug.Log("Показываем шкалу здоровья"); // для отладки
-            }
-        }
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
