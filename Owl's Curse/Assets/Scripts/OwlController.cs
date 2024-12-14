@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections;
 
 public class OwlController : MonoBehaviour
 {
@@ -16,9 +18,19 @@ public class OwlController : MonoBehaviour
     private Vector3 targetPosition;
     private bool isFlyingToTarget = false;
 
+    [Header("UI Elements")]
     [SerializeField] private Canvas gameCanvas;
-    [SerializeField] private GameObject imageToShow;
-    [SerializeField] private GameObject targetObject;
+    [SerializeField] private Image imageToShow;
+    [SerializeField] private Button buttonToShow;
+    [SerializeField] private TextMeshProUGUI textToShow;
+
+    [Header("Target and Animation Settings")]
+    [SerializeField] private GameObject targetObject;  
+    [SerializeField] private float fadeInDuration = 1f;
+    [SerializeField] private float elementDelay = 0.3f;
+
+    [SerializeField] private Transform minPoint;
+    [SerializeField] private Transform maxPoint;
 
     private void Start()
     {
@@ -28,10 +40,14 @@ public class OwlController : MonoBehaviour
         owlAnimator.SetBool("IsFlying", false);
         player = GameObject.FindGameObjectWithTag("Player");
 
-        if (gameCanvas != null && imageToShow != null)
+        if (gameCanvas != null)
         {
-            imageToShow.SetActive(false);
+            imageToShow.gameObject.SetActive(false);
+            buttonToShow.gameObject.SetActive(false);
+            textToShow.gameObject.SetActive(false);
         }
+
+        buttonToShow.onClick.AddListener(OnButtonClick);
     }
 
     private void Update()
@@ -97,7 +113,18 @@ public class OwlController : MonoBehaviour
 
     private void MoveOwl(float horizontalMove)
     {
-        transform.Translate(Vector2.right * horizontalMove * moveSpeed * Time.deltaTime);
+        float newPosition = transform.position.x + horizontalMove * moveSpeed * Time.deltaTime;
+
+        if (newPosition < minPoint.position.x)
+        {
+            newPosition = minPoint.position.x;
+        }
+        else if (newPosition > maxPoint.position.x)
+        {
+            newPosition = maxPoint.position.x;
+        }
+
+        transform.position = new Vector3(newPosition, transform.position.y, transform.position.z);
 
         if (horizontalMove > 0 && !isFacingRight)
         {
@@ -120,9 +147,11 @@ public class OwlController : MonoBehaviour
         owlAnimator.SetBool("IsFlying", true);
         owlAnimator.SetBool("IsWalking", false);
 
-        if (gameCanvas != null && imageToShow != null)
+        if (gameCanvas != null)
         {
-            imageToShow.SetActive(false);
+            imageToShow.gameObject.SetActive(false);
+            buttonToShow.gameObject.SetActive(false);
+            textToShow.gameObject.SetActive(false);
         }
     }
 
@@ -131,19 +160,92 @@ public class OwlController : MonoBehaviour
         float step = moveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
+
         if (transform.position == targetPosition)
         {
             isFlyingToTarget = false;
-            ShowImage();
+            ShowUIElements();
         }
     }
 
-    private void ShowImage()
+    private void ShowUIElements()
     {
-        if (gameCanvas != null && imageToShow != null)
+        if (gameCanvas != null)
         {
-            imageToShow.SetActive(true);
+            StartCoroutine(ShowElementsWithFadeIn());
         }
+    }
+
+    private IEnumerator ShowElementsWithFadeIn()
+    {
+
+        if (imageToShow != null)
+        {
+            imageToShow.gameObject.SetActive(true);
+            yield return StartCoroutine(FadeImage(imageToShow, 0f, 1f));
+        }
+
+        yield return new WaitForSeconds(elementDelay);
+
+
+        if (textToShow != null)
+        {
+            textToShow.gameObject.SetActive(true);
+            yield return StartCoroutine(FadeText(textToShow, 0f, 1f));
+        }
+
+        yield return new WaitForSeconds(elementDelay);
+
+        if (buttonToShow != null)
+        {
+            buttonToShow.gameObject.SetActive(true);
+            Image buttonImage = buttonToShow.GetComponent<Image>();
+            TextMeshProUGUI buttonText = buttonToShow.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (buttonImage != null)
+            {
+                yield return StartCoroutine(FadeImage(buttonImage, 0f, 1f));
+            }
+
+            if (buttonText != null)
+            {
+                yield return StartCoroutine(FadeText(buttonText, 0f, 1f));
+            }
+        }
+    }
+
+    private IEnumerator FadeImage(Image image, float startAlpha, float targetAlpha)
+    {
+        Color color = image.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeInDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeInDuration);
+            image.color = color;
+            yield return null;
+        }
+
+        color.a = targetAlpha;
+        image.color = color;
+    }
+
+    private IEnumerator FadeText(TextMeshProUGUI text, float startAlpha, float targetAlpha)
+    {
+        Color color = text.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeInDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeInDuration);
+            text.color = color;
+            yield return null;
+        }
+
+        color.a = targetAlpha;
+        text.color = color;
     }
 
     private void Flip()
@@ -164,5 +266,10 @@ public class OwlController : MonoBehaviour
     {
         isWalking = false;
         owlAnimator.SetBool("IsWalking", false);
+    }
+
+    private void OnButtonClick()
+    {
+        Debug.Log("Button clicked!");
     }
 }

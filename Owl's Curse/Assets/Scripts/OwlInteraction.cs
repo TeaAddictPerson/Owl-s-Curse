@@ -130,17 +130,9 @@ public class OwlInteraction : InteractableBase
             frameSwitch.activeFrame.SetActive(true);
         }
 
-        interactionPanel.SetActive(false);
-        promptMessage = ""; 
-    }
 
-    public void OnDestinationReached()
-    {
-        if (interactionPanel != null)
-        {
-            interactionPanel.SetActive(true);
-        }
-        promptMessage = "Нажмите E для взаимодействия"; 
+        interactionPanel.SetActive(false);
+        promptMessage = "";
     }
 
     private void OnNoButtonClicked()
@@ -185,4 +177,15 @@ public class OwlInteraction : InteractableBase
         bool inRange = distance <= interactionRadius;
         return inRange;
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Сова столкнулась с объектом: " + collision.gameObject.name);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Сова вошла в триггер: " + other.gameObject.name);
+    }
+
+
 }

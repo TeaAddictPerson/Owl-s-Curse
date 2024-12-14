@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\CinematicCamera.cs" />
     <Compile Include="Assets\Scripts\DeathScreenManager.cs" />
     <Compile Include="Assets\Scripts\DisapperTrigger.cs" />
+    <Compile Include="Assets\Scripts\FinalRoomTrigger.cs" />
     <Compile Include="Assets\Scripts\FrameSwitch.cs" />
     <Compile Include="Assets\Scripts\Frog.cs" />
     <Compile Include="Assets\Scripts\IDamageable.cs" />
