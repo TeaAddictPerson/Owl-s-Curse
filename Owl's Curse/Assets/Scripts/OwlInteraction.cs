@@ -45,11 +45,16 @@ public class OwlInteraction : InteractableBase
         yesButton.onClick.AddListener(OnYesButtonClicked);
         noButton.onClick.AddListener(OnNoButtonClicked);
         HideUI();
+
+        if (owlAnimator != null)
+        {
+            owlAnimator.enabled = false;
+        }
     }
 
     private void Update()
     {
-        if (IsPlayerInRange(playerTransform))
+        if (!isPlayerOnOwl && IsPlayerInRange(playerTransform))
         {
             if (!isInteracting && Input.GetKeyDown(KeyCode.E))
             {
@@ -58,7 +63,7 @@ public class OwlInteraction : InteractableBase
         }
         else
         {
-            if (isInteracting)
+            if (isInteracting || isPlayerOnOwl)
             {
                 HideUI();
             }
@@ -115,6 +120,7 @@ public class OwlInteraction : InteractableBase
 
         if (owlAnimator != null)
         {
+            owlAnimator.enabled = true;
             owlAnimator.SetBool("isWalking", false);
             owlAnimator.SetBool("isRiding", true);
         }
@@ -124,7 +130,17 @@ public class OwlInteraction : InteractableBase
             frameSwitch.activeFrame.SetActive(true);
         }
 
-        HideUI();
+        interactionPanel.SetActive(false);
+        promptMessage = ""; 
+    }
+
+    public void OnDestinationReached()
+    {
+        if (interactionPanel != null)
+        {
+            interactionPanel.SetActive(true);
+        }
+        promptMessage = "Нажмите E для взаимодействия"; 
     }
 
     private void OnNoButtonClicked()
