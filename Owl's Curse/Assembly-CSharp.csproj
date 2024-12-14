@@ -99,6 +99,8 @@
     <Compile Include="Assets\Scripts\LoadGameManager.cs" />
     <Compile Include="Assets\Scripts\NewGame.cs" />
     <Compile Include="Assets\Scripts\NewGameButtonController.cs" />
+    <Compile Include="Assets\Scripts\OwlController.cs" />
+    <Compile Include="Assets\Scripts\OwlInteraction.cs" />
     <Compile Include="Assets\Scripts\PasswordToggle.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />

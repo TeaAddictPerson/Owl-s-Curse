@@ -61,6 +61,7 @@ public class PlayerScript : MonoBehaviour
     private bool isInsane = false;
     public Image sanityBar;
 
+    public bool IsInputBlocked { get; set; } = false;
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
@@ -72,7 +73,9 @@ public class PlayerScript : MonoBehaviour
     {
         if (isDead) return;
 
-        
+        if (IsInputBlocked) return;
+
+
         IsGrounded = Physics2D.OverlapCircle(legs.position, groundRadius, Ground);
 
         if (!isInsane)
@@ -363,6 +366,22 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
         {
             currentInteractable.Interact();
+        }
+    }
+
+    private bool isOnOwl = false;
+
+    public void SetPlayerControl(bool control)
+    {
+        isOnOwl = !control;
+
+        if (isOnOwl)
+        {
+            this.enabled = false;  
+        }
+        else
+        {
+            this.enabled = true;
         }
     }
 

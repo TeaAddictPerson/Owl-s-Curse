@@ -70,20 +70,19 @@ public class InteractableSavePoint : InteractableBase
         PlayerScript playerScript = player.GetComponent<PlayerScript>();
         if (playerScript != null)
         {
-            // Увеличиваем максимальные значения
+        
             playerScript.maxHealth += (int)healthBonus;
             playerScript.attackDamage += (int)damageBonus;
 
-            // Восстанавливаем здоровье до максимума
+         
             playerScript.currentHealth = playerScript.maxHealth;
 
-            // Обновляем полосу здоровья
+       
             if (playerScript.Bar != null)
             {
                 playerScript.Bar.fillAmount = (float)playerScript.currentHealth / playerScript.maxHealth;
             }
 
-            // Устанавливаем рассудок
             playerScript.currentSanity = BASE_SANITY;
             if (playerScript.sanityBar != null)
             {

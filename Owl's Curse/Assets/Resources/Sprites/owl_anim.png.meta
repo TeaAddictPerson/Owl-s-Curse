@@ -1,7 +1,61 @@
 fileFormatVersion: 2
 guid: 45df75ddd94d1e64da2d48036af01f7f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -3634854375902038143
+    second: owl_anim_0
+  - first:
+      213: -2872655813091973828
+    second: owl_anim_1
+  - first:
+      213: 4597537915622742947
+    second: owl_anim_2
+  - first:
+      213: 1218217385221095251
+    second: owl_anim_3
+  - first:
+      213: -2435551463438658210
+    second: owl_anim_4
+  - first:
+      213: -7557508509916430204
+    second: owl_anim_5
+  - first:
+      213: 249711592147728624
+    second: owl_anim_6
+  - first:
+      213: 8721416378881612808
+    second: owl_anim_7
+  - first:
+      213: -7013469044035269651
+    second: owl_anim_8
+  - first:
+      213: -2800581122765045524
+    second: owl_anim_9
+  - first:
+      213: -3900777436078051816
+    second: owl_anim_10
+  - first:
+      213: -2659812441844767611
+    second: owl_anim_11
+  - first:
+      213: 7422645456736621075
+    second: owl_anim_12
+  - first:
+      213: 9112506169376671629
+    second: owl_anim_13
+  - first:
+      213: 7715954024028528493
+    second: owl_anim_14
+  - first:
+      213: 2753516415221023804
+    second: owl_anim_15
+  - first:
+      213: -3085989928212589487
+    second: owl_anim_16
+  - first:
+      213: -9146784492087752147
+    second: owl_anim_17
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -31,7 +85,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -40,12 +94,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 25
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -61,10 +115,34 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -73,7 +151,385 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: owl_anim_0
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 694
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 187b51214376e8dc0800000000000000
+      internalID: -3634854375902038143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_1
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 694
+        width: 165
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3521ba02c64228d0800000000000000
+      internalID: -2872655813091973828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_2
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 694
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab551e106cbdcf30800000000000000
+      internalID: 4597537915622742947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_3
+      rect:
+        serializedVersion: 2
+        x: 1934
+        y: 694
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35ffe49e14af7e010800000000000000
+      internalID: 1218217385221095251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_4
+      rect:
+        serializedVersion: 2
+        x: 2498
+        y: 695
+        width: 165
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e555e8d19de233ed0800000000000000
+      internalID: -2435551463438658210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_5
+      rect:
+        serializedVersion: 2
+        x: 3074
+        y: 694
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48080773d065e1790800000000000000
+      internalID: -7557508509916430204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_6
+      rect:
+        serializedVersion: 2
+        x: 3644
+        y: 694
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f8334abe57277300800000000000000
+      internalID: 249711592147728624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 350
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80c13811df1b80970800000000000000
+      internalID: 8721416378881612808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_8
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 350
+        width: 165
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb441b30172bae90800000000000000
+      internalID: -7013469044035269651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_9
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 350
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce0cce49e465229d0800000000000000
+      internalID: -2800581122765045524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_10
+      rect:
+        serializedVersion: 2
+        x: 1934
+        y: 350
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e65bec697add9c0800000000000000
+      internalID: -3900777436078051816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_11
+      rect:
+        serializedVersion: 2
+        x: 2498
+        y: 351
+        width: 165
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 584adaa2da2761bd0800000000000000
+      internalID: -2659812441844767611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_12
+      rect:
+        serializedVersion: 2
+        x: 3074
+        y: 350
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 312147e47b8820760800000000000000
+      internalID: 7422645456736621075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_13
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 6
+        width: 151
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d878047b410267e70800000000000000
+      internalID: 9112506169376671629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_14
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 13
+        width: 175
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6f5771dd43941b60800000000000000
+      internalID: 7715954024028528493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_15
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 6
+        width: 296
+        height: 259
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34c4744794763620800000000000000
+      internalID: 2753516415221023804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_16
+      rect:
+        serializedVersion: 2
+        x: 1715
+        y: 4
+        width: 552
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1549474b28c5c25d0800000000000000
+      internalID: -3085989928212589487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: owl_anim_17
+      rect:
+        serializedVersion: 2
+        x: 2316
+        y: 4
+        width: 315
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2ace0857f7101180800000000000000
+      internalID: -9146784492087752147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
