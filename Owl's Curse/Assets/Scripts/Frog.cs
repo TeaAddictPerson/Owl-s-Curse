@@ -141,7 +141,14 @@ public class Frog : MonoBehaviour, IDamageable, ISanityDamage
 
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
+
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerScript>();
+        if (playerScript != null)
+        {
+            playerScript.IncrementKillCount();
+        }
     }
+
 
     void OnDrawGizmosSelected()
     {

@@ -371,7 +371,17 @@ public class RavenBoss : MonoBehaviour, IDamageable, ISanityDamage
         gameObject.layer = LayerMask.NameToLayer("DeadEnemies");
         rb.isKinematic = true;
         this.enabled = false;
+
+        PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerScript>();
+        if (playerScript != null)
+        {
+            playerScript.IncrementKillCount();
+        };
+
+        Debug.Log("Босс убит. Счетчик врагов увеличен.");
     }
+
+
 
     private void OnPlayerDeath()
     {

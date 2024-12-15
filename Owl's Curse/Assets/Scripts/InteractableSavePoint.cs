@@ -150,28 +150,30 @@ public class InteractableSavePoint : InteractableBase
                         int userId = Convert.ToInt32(result);
                         Debug.Log($"Найден ID пользователя: {userId}");
 
+                      
                         string saveData = $"{savepointName},{stats.maxHealth},{stats.attackDamage},{stats.currentSanity}";
                         Debug.Log($"Подготовлены данные для сохранения: {saveData}");
 
-                        string updateQuery = @"
-                            INSERT OR REPLACE INTO saves (userId, currSave) 
-                            VALUES (@userId, @currSave);";
+                   
+                        string updateSaveQuery = @"
+                        INSERT OR REPLACE INTO saves (userId, currSave) 
+                        VALUES (@userId, @currSave);";
 
-                        using (IDbCommand updateCommand = dbConnection.CreateCommand())
+                        using (IDbCommand updateSaveCommand = dbConnection.CreateCommand())
                         {
-                            updateCommand.CommandText = updateQuery;
+                            updateSaveCommand.CommandText = updateSaveQuery;
 
-                            var userIdParam = updateCommand.CreateParameter();
+                            var userIdParam = updateSaveCommand.CreateParameter();
                             userIdParam.ParameterName = "@userId";
                             userIdParam.Value = userId;
-                            updateCommand.Parameters.Add(userIdParam);
+                            updateSaveCommand.Parameters.Add(userIdParam);
 
-                            var saveParam = updateCommand.CreateParameter();
+                            var saveParam = updateSaveCommand.CreateParameter();
                             saveParam.ParameterName = "@currSave";
                             saveParam.Value = saveData;
-                            updateCommand.Parameters.Add(saveParam);
+                            updateSaveCommand.Parameters.Add(saveParam);
 
-                            int rowsAffected = updateCommand.ExecuteNonQuery();
+                            int rowsAffected = updateSaveCommand.ExecuteNonQuery();
                             if (rowsAffected > 0)
                             {
                                 Debug.Log($"Игра успешно сохранена в точке: {savepointName}");
@@ -183,9 +185,44 @@ public class InteractableSavePoint : InteractableBase
                             {
                                 Debug.LogError("Не удалось сохранить данные в БД");
                             }
-
-                            HideUI();
                         }
+
+                      
+                        string updateStatsQuery = @"
+                        INSERT OR REPLACE INTO stats (userId, kills, lorenotes) 
+                        VALUES (@userId, @kills, @lorenotes);";
+
+                        using (IDbCommand updateStatsCommand = dbConnection.CreateCommand())
+                        {
+                            updateStatsCommand.CommandText = updateStatsQuery;
+
+                            var userIdParam = updateStatsCommand.CreateParameter();
+                            userIdParam.ParameterName = "@userId";
+                            userIdParam.Value = userId;
+                            updateStatsCommand.Parameters.Add(userIdParam);
+
+                            var killsParam = updateStatsCommand.CreateParameter();
+                            killsParam.ParameterName = "@kills";
+                            killsParam.Value = stats.killCount; 
+                            updateStatsCommand.Parameters.Add(killsParam);
+
+                            var lorenotesParam = updateStatsCommand.CreateParameter();
+                            lorenotesParam.ParameterName = "@lorenotes";
+                            lorenotesParam.Value = stats.noteCount; 
+                            updateStatsCommand.Parameters.Add(lorenotesParam);
+
+                            int statsRowsAffected = updateStatsCommand.ExecuteNonQuery();
+                            if (statsRowsAffected > 0)
+                            {
+                                Debug.Log("Статистика (убийства и записки) успешно сохранена");
+                            }
+                            else
+                            {
+                                Debug.LogError("Не удалось сохранить статистику в таблице stats");
+                            }
+                        }
+
+                        HideUI();
                     }
                     else
                     {
@@ -201,4 +238,5 @@ public class InteractableSavePoint : InteractableBase
             HideUI();
         }
     }
+
 }

@@ -66,6 +66,17 @@ public class InteractableBook : InteractableBase
     public override void Interact()
     {
         Debug.Log($"Взаимодействие вызвано на книге: {gameObject.name}");
+
+        if (!bookPanel.activeSelf)
+        {
+            PlayerScript playerScript = player.GetComponent<PlayerScript>();
+            if (playerScript != null)
+            {
+                playerScript.noteCount++; 
+                Debug.Log($"Количество записок: {playerScript.noteCount}");
+            }
+        }
+
         if (bookPanel == null)
         {
             Debug.LogError($"Панель книги равна null на {gameObject.name}!");
@@ -96,4 +107,6 @@ public class InteractableBook : InteractableBase
             }
         }
     }
+
+
 }

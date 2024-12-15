@@ -61,6 +61,11 @@ public class PlayerScript : MonoBehaviour
     private bool isInsane = false;
     public Image sanityBar;
 
+    [Header("Статистика")]
+    public int killCount = 0;
+    public int noteCount = 0;
+
+
     public bool IsInputBlocked { get; set; } = false;
     void Start()
     {
@@ -141,6 +146,22 @@ public class PlayerScript : MonoBehaviour
 
         HandleInteraction();
     }
+
+    public void IncrementKillCount()
+    {
+        killCount++;
+        Debug.Log($"Количество убийств: {killCount}");
+    }
+
+
+    public void SaveStats()
+    {
+        PlayerPrefs.SetInt("KillCount", killCount);
+        PlayerPrefs.SetInt("NoteCount", noteCount);
+        PlayerPrefs.Save();
+        Debug.Log("Статистика сохранена");
+    }
+
 
     private IEnumerator InsanityBehavior()
     {
