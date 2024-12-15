@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using Mono.Data.Sqlite;
+using System.Data;
+using System.IO;
+using System;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -14,7 +18,7 @@ public class PlayerScript : MonoBehaviour
     [Header("Здоровье")]
     public int maxHealth = 15;
     public int currentHealth;
-    public float invincibilityDuration = 1f; 
+    public float invincibilityDuration = 1f;
     private float invincibilityTimer = 0f;
     private bool isInvincible = false;
 
@@ -42,11 +46,11 @@ public class PlayerScript : MonoBehaviour
     public bool isDead = false;
 
     [Header("Настройки скольжения")]
-    public float dashForce = 20f;        
-    public float dashDuration = 0.2f;   
-    public float dashCooldown = 1f;    
-    private bool canDash = true;         
-    private bool isDashing = false;      
+    public float dashForce = 20f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 1f;
+    private bool canDash = true;
+    private bool isDashing = false;
     private float dashCooldownTimer = 0f;
 
     [Header("Взаимодействие")]
@@ -57,13 +61,15 @@ public class PlayerScript : MonoBehaviour
     public float maxSanity = 5f;
     public float currentSanity;
     public float sanityLossOnDamage = 3f;
-    public float healthLossRate = 1f; 
+    public float healthLossRate = 1f;
     private bool isInsane = false;
     public Image sanityBar;
 
     [Header("Статистика")]
-    public int killCount = 0;
-    public int noteCount = 0;
+    public int killCount;
+    public int noteCount;
+
+    private string dbPath;
 
 
     public bool IsInputBlocked { get; set; } = false;
@@ -72,6 +78,7 @@ public class PlayerScript : MonoBehaviour
         rd = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         currentSanity = maxSanity;
+        LoadStatsFromDatabase();
     }
 
     private void Update()
@@ -85,7 +92,7 @@ public class PlayerScript : MonoBehaviour
 
         if (!isInsane)
         {
-           
+
             if (IsGrounded && Input.GetKeyDown(KeyCode.Space))
             {
                 rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
@@ -99,7 +106,7 @@ public class PlayerScript : MonoBehaviour
             HorizontalMove = Input.GetAxisRaw("Horizontal") * speed;
         }
 
-     
+
         if (!canDash)
         {
             dashCooldownTimer -= Time.deltaTime;
@@ -109,11 +116,11 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-    
+
         animator.SetBool("Jumping", !IsGrounded);
         animator.SetFloat("HorizontalMove", Mathf.Abs(HorizontalMove));
 
-       
+
         if (isInvincible)
         {
             invincibilityTimer -= Time.deltaTime;
@@ -124,7 +131,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-   
+
         if (!isInsane && Time.time >= nextAttackTime)
         {
             if (Input.GetMouseButtonDown(0))
@@ -134,7 +141,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-       
+
         if (HorizontalMove < 0 && FacingRight)
         {
             Flip();
@@ -169,21 +176,21 @@ public class PlayerScript : MonoBehaviour
 
         while (currentSanity <= 0 && !isDead)
         {
-         
-            float randomX = Random.Range(-1f, 1f);
+
+            float randomX = UnityEngine.Random.Range(-1f, 1f);
             HorizontalMove = randomX * speed;
 
-        
+
             rd.velocity = new Vector2(randomX * speed * 10f, rd.velocity.y);
 
-            
-            if (IsGrounded && Random.value > 0.95f)
+
+            if (IsGrounded && UnityEngine.Random.value > 0.95f)
             {
                 rd.AddForce(transform.up * jump_force, ForceMode2D.Impulse);
                 animator.SetBool("Jumping", true);
             }
 
-           
+
             if (randomX < 0 && FacingRight)
             {
                 Flip();
@@ -193,10 +200,10 @@ public class PlayerScript : MonoBehaviour
                 Flip();
             }
 
-          
+
             animator.SetFloat("HorizontalMove", Mathf.Abs(randomX * speed));
 
-          
+
             TakeDamage(1, true);
 
             yield return new WaitForSeconds(healthLossRate);
@@ -263,7 +270,7 @@ public class PlayerScript : MonoBehaviour
         {
             Debug.LogError("DeathScreenManager не найден на сцене!");
         }
-      
+
     }
 
     void Attack()
@@ -273,7 +280,7 @@ public class PlayerScript : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
-          
+
             IDamageable damageable = enemy.GetComponent<IDamageable>();
             if (damageable != null)
             {
@@ -296,10 +303,10 @@ public class PlayerScript : MonoBehaviour
         {
             if (!isInsane)
             {
-              
+
                 Vector2 targetVelocity = new Vector2(HorizontalMove * 10f, rd.velocity.y);
                 rd.velocity = targetVelocity;
-            }        
+            }
         }
     }
 
@@ -327,23 +334,23 @@ public class PlayerScript : MonoBehaviour
         isDashing = true;
         dashCooldownTimer = dashCooldown;
 
-        
+
         float originalGravity = rd.gravityScale;
         rd.gravityScale = 0;
 
-        
+
         float dashDirection = FacingRight ? 1f : -1f;
 
- 
+
         rd.velocity = new Vector2(dashDirection * dashForce, 0f);
 
-       
+
         animator.SetTrigger("Dash");
 
-       
+
         yield return new WaitForSeconds(dashDuration);
 
-      
+
         rd.gravityScale = originalGravity;
         isDashing = false;
     }
@@ -398,11 +405,94 @@ public class PlayerScript : MonoBehaviour
 
         if (isOnOwl)
         {
-            this.enabled = false;  
+            this.enabled = false;
         }
         else
         {
             this.enabled = true;
+        }
+    }
+
+    private void LoadStatsFromDatabase()
+    {
+        string userName = UserSession.UserName; 
+        if (string.IsNullOrEmpty(userName))
+        {
+            Debug.LogError("Имя пользователя не найдено.");
+            return;
+        }
+
+        string connectionString = $"URI=file:{dbPath}";
+
+        try
+        {
+            using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+            {
+                dbConnection.Open();
+                Debug.Log("Подключение к базе данных установлено.");
+
+               
+                string getUserIdQuery = "SELECT id FROM users WHERE name = @name;";
+
+                using (IDbCommand getUserIdCommand = dbConnection.CreateCommand())
+                {
+                    getUserIdCommand.CommandText = getUserIdQuery;
+
+                    var nameParam = getUserIdCommand.CreateParameter();
+                    nameParam.ParameterName = "@name";
+                    nameParam.Value = userName;
+                    getUserIdCommand.Parameters.Add(nameParam);
+
+                    int userId = -1;
+
+                    using (IDataReader reader = getUserIdCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            userId = reader.GetInt32(0); 
+                        }
+                        else
+                        {
+                            Debug.LogError($"Пользователь с именем '{userName}' не найден.");
+                            return;
+                        }
+                    }
+
+                   
+                    string query = "SELECT kills, lorenotes FROM stats WHERE id = @id;";
+
+                    using (IDbCommand command = dbConnection.CreateCommand())
+                    {
+                        command.CommandText = query;
+
+                        var idParam = command.CreateParameter();
+                        idParam.ParameterName = "@id";
+                        idParam.Value = userId;
+                        command.Parameters.Add(idParam);
+
+                        using (IDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                killCount = reader.GetInt32(0); 
+                                noteCount = reader.GetInt32(1); 
+
+                                Debug.Log($"Статистика загружена: Убийств: {killCount}, Записок: {noteCount}");
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Статистика не найдена, устанавливаем значения по умолчанию.");
+                                killCount = 0;
+                                noteCount = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Ошибка при загрузке данных из базы: {ex.Message}");
         }
     }
 
