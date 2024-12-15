@@ -78,6 +78,7 @@ public class PlayerScript : MonoBehaviour
         rd = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         currentSanity = maxSanity;
+        dbPath = Path.Combine(Application.dataPath, "OwlsCurse.db");
         LoadStatsFromDatabase();
     }
 
@@ -415,7 +416,7 @@ public class PlayerScript : MonoBehaviour
 
     private void LoadStatsFromDatabase()
     {
-        string userName = UserSession.UserName; 
+        string userName = UserSession.UserName;
         if (string.IsNullOrEmpty(userName))
         {
             Debug.LogError("Имя пользователя не найдено.");
@@ -431,9 +432,7 @@ public class PlayerScript : MonoBehaviour
                 dbConnection.Open();
                 Debug.Log("Подключение к базе данных установлено.");
 
-               
                 string getUserIdQuery = "SELECT id FROM users WHERE name = @name;";
-
                 using (IDbCommand getUserIdCommand = dbConnection.CreateCommand())
                 {
                     getUserIdCommand.CommandText = getUserIdQuery;
@@ -449,7 +448,7 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (reader.Read())
                         {
-                            userId = reader.GetInt32(0); 
+                            userId = reader.GetInt32(0);
                         }
                         else
                         {
@@ -458,8 +457,8 @@ public class PlayerScript : MonoBehaviour
                         }
                     }
 
-                   
-                    string query = "SELECT kills, lorenotes FROM stats WHERE id = @id;";
+                  
+                    string query = "SELECT kills, lorenotes FROM stats WHERE userId = @id;";
 
                     using (IDbCommand command = dbConnection.CreateCommand())
                     {
@@ -495,6 +494,7 @@ public class PlayerScript : MonoBehaviour
             Debug.LogError($"Ошибка при загрузке данных из базы: {ex.Message}");
         }
     }
+
 
     private void OnDrawGizmos()
     {

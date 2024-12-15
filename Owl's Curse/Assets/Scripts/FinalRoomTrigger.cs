@@ -43,7 +43,7 @@ public class FinalRoomTrigger : MonoBehaviour
                 dbConnection.Open();
                 Debug.Log("Подключение к БД установлено");
 
-                string query = "SELECT currSave FROM saves ORDER BY id DESC LIMIT 1;"; 
+                string query = "SELECT currSave FROM saves ORDER BY userId DESC LIMIT 1;"; 
 
                 using (IDbCommand command = dbConnection.CreateCommand())
                 {
