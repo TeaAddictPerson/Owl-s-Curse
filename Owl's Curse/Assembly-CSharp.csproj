@@ -79,6 +79,8 @@
     <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
     <Compile Include="Assets\Scripts\AddUserCheck.cs" />
+    <Compile Include="Assets\Scripts\AudioCode.cs" />
+    <Compile Include="Assets\Scripts\AudioController.cs" />
     <Compile Include="Assets\Scripts\BossAttackPoint.cs" />
     <Compile Include="Assets\Scripts\BossEyesController.cs" />
     <Compile Include="Assets\Scripts\BossRoomTrigger.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\Quit.cs" />
     <Compile Include="Assets\Scripts\RavenBoss.cs" />
     <Compile Include="Assets\Scripts\SanityPickup.cs" />
     <Compile Include="Assets\Scripts\SceneTransition.cs" />

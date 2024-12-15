@@ -523,10 +523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f39320a590971841a487440eaa3ff74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField1: {fileID: 1175922085}
-  inputField2: {fileID: 70368718}
-  button: {fileID: 1824157280}
-  buttonText: {fileID: 976279333}
 --- !u!1 &586619902
 GameObject:
   m_ObjectHideFlags: 0
